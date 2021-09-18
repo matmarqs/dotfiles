@@ -11,7 +11,7 @@ set nohlsearch
 set number relativenumber
 
 " From defaults.vim
-set timeoutlen=1500
+set timeoutlen=2000
 set ttimeoutlen=10
 set history=200
 
