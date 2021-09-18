@@ -1,6 +1,0 @@
-# Eh importante setar essas variaveis no .xprofile pois
-# aplicacoes em Qt (o Anki, e.g.) pegam as variaveis daqui.
-export GTK_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export QT_IM_MODULE=fcitx
-#export XIM_PROGRAM=/usr/bin/ibus-daemon
