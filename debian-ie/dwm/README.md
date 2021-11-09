@@ -3,7 +3,7 @@
 ### The following patches were applied in order in my dwm build.
 
 It is a vanity_gaps combo with a lot of layouts.
-* 1: vanitygaps + layouts         971 L
+* 1: vanitygaps + layouts,        971 L
 * 2: swallow,                     412 L
 * 3: pertag,                      177 L
 * 4: cyclelayouts,                 93 L
