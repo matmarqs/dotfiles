@@ -1,0 +1,5 @@
+[Settings]
+gtk-icon-theme-name = BeautyLine
+gtk-theme-name = Sweet-Ambar-Blue
+gtk-font-name = Cantarell 10
+gtk-application-prefer-dark-theme = false
