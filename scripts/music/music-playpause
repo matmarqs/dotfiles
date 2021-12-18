@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ $(pgrep "mpd") ]; then
+  mpc -q toggle
+elif [ $(pgrep "clementine" | sed 1q) ]; then
+  playerctl --player=clementine play-pause
+elif [ $(pgrep "spotify" | sed 1q) ]; then
+  playerctl --player=spotify play-pause
+fi
