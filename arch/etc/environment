@@ -1,0 +1,17 @@
+#
+# This file is parsed by pam_env module
+#
+# Syntax: simple "KEY=VAL" pairs on separate lines
+#
+
+# Variable for Qt
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+# Configuring fcitx-mozc
+# Install IM modules: on Void there are packages for gtk2, gtk3 e qt5.
+# They are of the form libfcitx-qt5, libfcitx-gtk.
+# Setting variables in /etc/environment (it needs to be on Void)
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export SDL_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx

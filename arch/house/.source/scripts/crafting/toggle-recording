@@ -1,0 +1,9 @@
+#!/bin/bash
+pkill ffmpeg || ffmpeg -f x11grab -s 1366x768 -i :0.0 -f alsa -i default $HOME/Videos/newvideo.mp4
+
+# My resolution is 1366x768
+# For automatic resolution:
+# xdpyinfo | grep dimensions | awk '{print $2}'
+
+# command to convert videos compatible with whatsapp
+# ffmpeg -i broken.mp4 -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p working.mp4

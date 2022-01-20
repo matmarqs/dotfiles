@@ -1,0 +1,1 @@
+mpv --ytdl-format="bestvideo[height<=?144]+bestaudio/best" https://www.youtube.com/watch?v=auXYzfrmVbw

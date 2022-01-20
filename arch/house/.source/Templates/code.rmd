@@ -1,0 +1,14 @@
+---
+title: <++>
+author: <++>
+output:
+ pdf_document:
+  number_sections: true
+urlcolor: magenta
+---
+
+\tableofcontents
+
+# <++>
+
+<++>

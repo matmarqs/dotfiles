@@ -1,0 +1,20 @@
+## zathura bookmarks are stored in $HOME/.local/share/zathura/bookmarks
+
+# disable statusbar by default
+set guioptions none
+
+# statusbar font
+set font "Source Code Pro 10"
+
+# disable selected text notification
+set selection-notification false
+
+# copying to clipboard, instead of primary
+set selection-clipboard clipboard
+
+# more comfortable keys for zooming (i/u)
+map i zoom in
+map u zoom out
+
+# only name of the file, not full path
+set statusbar-basename true
