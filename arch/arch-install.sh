@@ -32,14 +32,17 @@ echo ""
 
 echo "Copying all \"house\" files to \$HOME."
 cp -r $DOTDIR/house/* $HOME
+cp -r $DOTDIR/house/.* $HOME
 echo ""
 
 echo "Copying all \"etc\" files to /etc."
 sudo cp -r $DOTDIR/etc/* /etc
+sudo cp -r $DOTDIR/etc/.* /etc
 echo ""
 
 echo "Copying all \"usr\" files to /usr."
 sudo cp -r $DOTDIR/usr/* /usr
+sudo cp -r $DOTDIR/usr/.* /usr
 echo ""
 
 # making my scripts executable
@@ -49,7 +52,7 @@ chmod +x "$HOME/.config/sxiv/exec/image-info"
 
 # changing tty keyboard layout to br-abnt2-custom
 echo "Setting Esc and Caps_Lock changed in tty."
-echo "KEYMAP=/usr/local/share/keymaps/br-abnt2-custom.map.gz" > /etc/vconsole.conf
+sudo echo "KEYMAP=/usr/local/share/keymaps/br-abnt2-custom.map.gz" > /etc/vconsole.conf
 echo ""
 
 # getting rid of delay in bash vi-mode by /etc/inputrc
@@ -64,11 +67,11 @@ echo ""
 
 # setting up the crontab
 sudo systemctl enable cronie
-echo -e "# Trocar tema para light ou dark\n15 18 * * * DISPLAY=:0 /usr/local/scripts/aesthetics\n15 07 * * * DISPLAY=:0 /usr/local/scripts/aesthetics\n# Notificacao de bateria baixa\n*/10 * * * * DISPLAY=:0 /usr/local/scripts/lowbat" > /var/spool/cron/$THEUSER
+sudo echo -e "# Trocar tema para light ou dark\n15 18 * * * DISPLAY=:0 /usr/local/scripts/aesthetics\n15 07 * * * DISPLAY=:0 /usr/local/scripts/aesthetics\n# Notificacao de bateria baixa\n*/10 * * * * DISPLAY=:0 /usr/local/scripts/lowbat" > /var/spool/cron/$THEUSER
 
 # configuring themes for GTK and Qt
 echo "Configuring GTK and Qt themes."
-mkdir $HOME/.config/gtk-2.0; mkdir $HOME/.config/gtk-3.0
+mkdir "$HOME/.config/gtk-2.0"; mkdir "$HOME/.config/gtk-3.0"
 echo ""
 
 # extracting resources
