@@ -31,33 +31,30 @@ sudo pacman -S --needed $MYDEPS
 echo ""
 
 echo "Copying all \"house\" files to \$HOME."
-cp -r $DOTDIR/house/* $HOME
-cp -r $DOTDIR/house/.* $HOME
+cp -r $DOTDIR/house/. $HOME
 echo ""
 
 echo "Copying all \"etc\" files to /etc."
-sudo cp -r $DOTDIR/etc/* /etc
-sudo cp -r $DOTDIR/etc/.* /etc
+sudo cp -r $DOTDIR/etc/. /etc
 echo ""
 
 echo "Copying all \"usr\" files to /usr."
-sudo cp -r $DOTDIR/usr/* /usr
-sudo cp -r $DOTDIR/usr/.* /usr
+sudo cp -r $DOTDIR/usr/. /usr
 echo ""
 
 # making my scripts executable
-sudo chmod +x /usr/local/scripts/*
-sudo chmod +x /usr/local/bin/*
-chmod +x "$HOME/.config/sxiv/exec/image-info"
+sudo chmod -R +x /usr/local/scripts
+sudo chmod -R +x /usr/local/bin
+chmod -R +x "$HOME/.config/sxiv/exec"
 
 # changing tty keyboard layout to br-abnt2-custom
 echo "Setting Esc and Caps_Lock changed in tty."
-sudo echo "KEYMAP=/usr/local/share/keymaps/br-abnt2-custom.map.gz" > /etc/vconsole.conf
+echo "KEYMAP=/usr/local/share/keymaps/br-abnt2-custom.map.gz" | sudo tee /etc/vconsole.conf
 echo ""
 
 # getting rid of delay in bash vi-mode by /etc/inputrc
 echo "Getting rid of delay in bash vi mode by /etc/inputrc."
-sudo echo -e "\n# no delay in bash vi-mode\nset keyseq-timeout 0.01" >> /etc/inputrc
+echo -e "\n# no delay in bash vi-mode\nset keyseq-timeout 0.01" | sudo tee -a /etc/inputrc
 echo ""
 
 # configuring /etc/sudoers
@@ -67,7 +64,7 @@ echo ""
 
 # setting up the crontab
 sudo systemctl enable cronie
-sudo echo -e "# Trocar tema para light ou dark\n15 18 * * * DISPLAY=:0 /usr/local/scripts/aesthetics\n15 07 * * * DISPLAY=:0 /usr/local/scripts/aesthetics\n# Notificacao de bateria baixa\n*/10 * * * * DISPLAY=:0 /usr/local/scripts/lowbat" > /var/spool/cron/$THEUSER
+echo -e "# Trocar tema para light ou dark\n15 18 * * * DISPLAY=:0 /usr/local/scripts/aesthetics\n15 07 * * * DISPLAY=:0 /usr/local/scripts/aesthetics\n# Notificacao de bateria baixa\n*/10 * * * * DISPLAY=:0 /usr/local/scripts/lowbat" | sudo tee /var/spool/cron/$THEUSER
 
 # configuring themes for GTK and Qt
 echo "Configuring GTK and Qt themes."
@@ -84,7 +81,7 @@ echo ""
 
 # changing default cursor theme to Breeze_Snow
 echo "Changing default cursor theme to Breeze_Snow."
-sudo echo -e "[icon theme]\nInherits=Breeze_Snow" > /usr/share/icons/default/index.theme
+echo -e "[icon theme]\nInherits=Breeze_Snow" | sudo tee /usr/share/icons/default/index.theme
 
 # compiling and installing suckless programs
 echo "Compiling and installing dwm."
