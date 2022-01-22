@@ -1,50 +1,7 @@
 #!/bin/bash
 
-# Script to install Arch EFI on VirtualBox
+# Part 2 of Arch Installation. This part is after arch-chroot.
 
-loadkeys br-abnt2
-curl -LO "https://archlinux.org/mirrorlist/?country=BR&country=CA&country=DE&country=GB&country=US&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on"
-MIRRORLIST="$(ls | grep country)"
-sed -i 's/^.\(.*\)/\1/' "$MIRRORLIST"
-mv "$MIRRORLIST" /etc/pacman.d/mirrorlist.bak
-rankmirrors -n 15 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
-
-fdisk /dev/sda <<EOF
-g
-n
-1
-
-+512M
-t
-1
-n
-2
-
-+6G
-t
-2
-19
-n
-3
-
-
-t
-3
-23
-w
-EOF
-
-mkfs.fat -F32 /dev/sda1
-mkswap /dev/sda2
-mkfs.ext4 /dev/sda3
-mount /dev/sda3 /mnt
-mkdir -p /mnt/boot/efi
-mount /dev/sda1 /mnt/boot/efi
-swapon /dev/sda2
-
-pacstrap /mnt base base-devel linux linux-firmware
-genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
@@ -82,6 +39,6 @@ echo "Installation complete. Now, type the following commands:"
 echo -e "\n"
 echo "\$> exit"
 echo "\$> umount -R /mnt"
-echo "poweroff"
+echo "\$> poweroff"
 echo -e "\n"
 echo "After that you can disconnect the installation media and reboot the system."
