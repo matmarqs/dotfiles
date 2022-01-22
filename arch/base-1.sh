@@ -3,11 +3,13 @@
 # Script to install Arch EFI on VirtualBox
 
 loadkeys br-abnt2
+pacman -Sy pacman-contrib
 curl -LO "https://archlinux.org/mirrorlist/?country=BR&country=CA&country=DE&country=GB&country=US&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on"
 MIRRORLIST="$(ls | grep country)"
 sed -i 's/^.\(.*\)/\1/' "$MIRRORLIST"
-mv "$MIRRORLIST" /etc/pacman.d/mirrorlist.bak
-rankmirrors -n 15 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
+mv "$MIRRORLIST" /etc/pacman.d/mirrorlist-gen
+mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-bak
+rankmirrors -n 15 /etc/pacman.d/mirrorlist-gen > /etc/pacman.d/mirrorlist
 
 fdisk /dev/sda <<EOF
 g
