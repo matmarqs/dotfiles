@@ -47,6 +47,16 @@ swapon /dev/sda2
 pacstrap /mnt base base-devel linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
+echo -e "\n\n"
+echo "This is the /mnt/etc/fstab file"
+echo -e "\n"
+cat /mnt/etc/fstab
+echo -e "\n\n"
+
+echo -e "\n\nCopying mirrorlist to new system."
+cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
+echo -e "\n\n"
+
 echo "It's now time to chroot, please execute:
 \$> arch-chroot /mnt
 and execute base-2.sh"
