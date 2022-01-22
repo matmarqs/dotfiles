@@ -28,10 +28,6 @@ breeze-icons
 parcellite
 clipmenu
 xcompmgr
-fcitx
-fcitx-mozc
-fcitx-qt5
-fcitx-configtool
 dunst
 cronie
 dbus
@@ -71,5 +67,4 @@ playerctl
 pamixer
 ipython
 gtk-engine-murrine
-cmatrix
-curl
+qt5ct
