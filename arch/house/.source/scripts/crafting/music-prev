@@ -1,8 +1,0 @@
-#!/bin/bash
-if [ $(pgrep "mpd") ]; then
-  mpc -q prev
-elif [ $(pgrep "clementine" | sed 1q) ]; then
-  playerctl --player=clementine previous
-elif [ $(pgrep "spotify" | sed 1q) ]; then
-  playerctl --player=spotify previous
-fi

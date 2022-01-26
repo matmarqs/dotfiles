@@ -1,4 +1,0 @@
-#!/bin/sh
-brilho="$(xbacklight -get | awk -F'.' '{print $1}')"
-icon=" " 
-echo "$icon$brilho"

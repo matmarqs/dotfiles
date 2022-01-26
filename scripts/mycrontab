@@ -1,5 +1,0 @@
-# Trocar tema para light ou dark
-15 18 * * * DISPLAY=:0 $HOME/scripts/aesthetics
-15 07 * * * DISPLAY=:0 $HOME/scripts/aesthetics
-# Notificacao de bateria baixa
-*/10 * * * * DISPLAY=:0 $HOME/scripts/lowbat

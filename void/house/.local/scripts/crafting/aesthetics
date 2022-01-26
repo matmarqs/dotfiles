@@ -1,0 +1,20 @@
+#!/bin/bash
+
+hour=$(date '+%H')
+dyncfg="$HOME/.config/dynconf"
+wplight=wallpaper-light.jpg
+wpdark=wallpaper-dark.jpg
+#wplight=$(ls $dyncfg | grep wallpaper-light)
+#wpdark=$(ls $dyncfg | grep wallpaper-dark)
+
+if [[ 10#$hour -ge 7 && 10#$hour -le 17 ]]; then
+	feh --no-fehbg --bg-scale $dyncfg/$wplight
+	cp $dyncfg/gtkrc-light $HOME/.config/gtk-2.0/gtkrc
+	cp $dyncfg/settings.ini-light $HOME/.config/gtk-3.0/settings.ini
+	cp $dyncfg/zathurarc-light $HOME/.config/zathura/zathurarc
+else
+	feh --no-fehbg --bg-scale $dyncfg/$wpdark
+	cp $dyncfg/gtkrc-dark $HOME/.config/gtk-2.0/gtkrc
+	cp $dyncfg/settings.ini-dark $HOME/.config/gtk-3.0/settings.ini
+	cp $dyncfg/zathurarc-dark $HOME/.config/zathura/zathurarc
+fi

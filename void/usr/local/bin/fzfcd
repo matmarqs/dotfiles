@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd $HOME
+FILE="$(fzf)"
+DIR="$(dirname "$FILE")"
+cd $DIR
