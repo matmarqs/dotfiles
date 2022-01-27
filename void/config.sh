@@ -149,9 +149,9 @@ sudo mkdir -p /root/.config
 sudo mkdir -p /root/.local/bin
 sudo mkdir -p /root/.local/share
 sudo mkdir -p /root/.cache
-sudo cp -r $DOTDIR/.config/shell /root/.config
-sudo cp -r $DOTDIR/.config/tmux /root/.config
-sudo cp -r $DOTDIR/.config/wget /root/.config
+sudo cp -r $DOTDIR/house/.config/shell /root/.config
+sudo cp -r $DOTDIR/house/.config/tmux /root/.config
+sudo cp -r $DOTDIR/house/.config/wget /root/.config
 sudo rm /root/.inputrc
 sudo rm /root/.lesshst
 sudo rm /root/.bash_history
