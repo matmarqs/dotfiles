@@ -34,19 +34,19 @@ getAns "d" "v" "Do you plan to use this system as desktop (d) or virtual machine
 THEUSER=$(whoami)
 DOTDIR=$(dirname "$(realpath $0)")
 if [ "$USAGE" = "d" ]; then
-    MYDEPS="$(cat "$DOTDIR/deps.txt" "$DOTDIR/desktop/deps-desktop.txt")"
+    MYDEPS=$(cat $DOTDIR/deps.txt $DOTDIR/desktop/deps-desktop.txt)
 else
-    MYDEPS="$(cat "$DOTDIR/deps.txt" "$DOTDIR/virtual/deps-virtual.txt")"
+    MYDEPS=$(cat $DOTDIR/deps.txt $DOTDIR/virtual/deps-virtual.txt)
 fi
 
 say "Changing to the best repository I know, upgrading and adding non-free repository."
 echo "repository=https://mirrors.servercentral.com/voidlinux/current" | sudo tee /usr/share/xbps.d/00-repository-main.conf
 sudo xbps-install -Syu && sudo xbps-install -yu void-repo-nonfree   # 2 times in case xbps needs to be updated
-echo "repository=https://mirrors.servercentral.com/voidlinux/current" | sudo tee /usr/share/xbps.d/10-repository-nonfree.conf
+echo "repository=https://mirrors.servercentral.com/voidlinux/current/nonfree" | sudo tee /usr/share/xbps.d/10-repository-nonfree.conf
 echo
 
 say "Installing dependencies with xbps."
-sudo xbps-install -y "$MYDEPS"
+sudo xbps-install -Sy $MYDEPS
 echo
 
 say "Copying all files to respective directories."
