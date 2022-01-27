@@ -14,4 +14,3 @@ Although I published <BeautyLine Icon Theme> under GPLV3 but some of icons in pa
 Although I try to keep theme pack updated and add most distro's common icons But feel free to add common icons of any distro and DE and publish it in any Repo and OS Under the Name <BeautyLine Icon Theme> and <Sajjad Abdollahzadeh> Author.
 
 Enjoy it and if you have time and intrest, help me to get it better ...
-

@@ -14,8 +14,8 @@ alias \
     egrep='grep -E --color=auto' \
     fgrep='grep -F --color=auto' \
     diff='diff --color=auto' \
-    ip='ip --color=auto'
-    ccat="highlight --out-format=ansi" \
+    ip='ip --color=auto' \
+    ccat="highlight --out-format=ansi"
 
 # abbreviations
 alias \

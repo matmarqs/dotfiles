@@ -28,7 +28,7 @@ getAns "y" "n" "Your config files will be overwritten. Continue?" "CONTINUE"
 [ $CONTINUE != "y" ] && echo && exit
 echo
 
-getAns "y" "n" "Do you plan to use this system as desktop (d) or virtual machine (v)?" "USAGE"
+getAns "d" "v" "Do you plan to use this system as desktop (d) or virtual machine (v)?" "USAGE"
 
 # getting the variables
 THEUSER=$(whoami)
@@ -40,9 +40,9 @@ else
 fi
 
 say "Changing to the best repository I know, upgrading and adding non-free repository."
-echo "repository=https://mirrors.servercentral.com/voidlinux/current" > /usr/share/xbps.d/00-repository-main.conf
+echo "repository=https://mirrors.servercentral.com/voidlinux/current" | sudo tee /usr/share/xbps.d/00-repository-main.conf
 sudo xbps-install -Syu && sudo xbps-install -yu void-repo-nonfree # 2 times in case xbps needs to be updated
-echo "repository=https://mirrors.servercentral.com/voidlinux/current" > /usr/share/xbps.d/10-repository-nonfree.conf
+echo "repository=https://mirrors.servercentral.com/voidlinux/current" | sudo tee /usr/share/xbps.d/10-repository-nonfree.conf
 echo
 
 say "Installing dependencies with xbps."
@@ -86,13 +86,15 @@ echo
 # extracting resources
 say "Extracting appearance resources."
 sudo tar -xzf $HOME/.local/appearance/BeautyLine/BeautyLine.tar.gz -C /usr/share/icons
-sudo tar -xzf $HOME/.local/appearance/Midnight-BlueNight/Midnight-BlueNight.tar.gz -C /usr/share/themes
+sudo tar -xzf $HOME/.local/appearance/Midnight/Midnight-BlueNight.tar.gz -C /usr/share/themes
+sudo tar -xzf $HOME/.local/appearance/Midnight/Midnight-GreenNight.tar.gz -C /usr/share/themes
 sudo tar -xf $HOME/.local/appearance/Sweet-Ambar-Blue/Sweet-Ambar-Blue.tar.xz -C /usr/share/themes
 sudo tar -xf $HOME/.local/appearance/Matcha-sea/Matcha-sea.tar.xz -C /usr/share/themes
 sudo unzip -qq $HOME/.local/appearance/mononoki/mononoki.zip -d /usr/share/fonts
 echo
 
 say "Changing default cursor theme to Breeze_Hacked."
+sudo mkdir -p /usr/share/icons/default
 printf "[icon theme]\nInherits=Breeze_Hacked\n" | sudo tee /usr/share/icons/default/index.theme
 echo
 
@@ -118,6 +120,7 @@ echo
 cd $DOTDIR
 
 say "Creating basic home folders."
+mkdir -p $HOME/.cache
 mkdir -p $HOME/Music $HOME/Documents $HOME/Workspace $HOME/downloads $HOME/Pictures/prints
 mkdir -p $HOME/Pictures/wallpapers $HOME/Videos $HOME/.local/public
 echo
@@ -130,18 +133,31 @@ say "Fixing the fonts."
 sudo ln -sf /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d && sudo xbps-reconfigure -f fontconfig
 echo
 
-say "Updating Xresources."
-xrdb $HOME/.config/x11/Xresources
-echo
+# deleting some trash from the default installation
+say "Deleting residues from default installation."
+[ -f $HOME/.inputrc ] && rm $HOME/.inputrc
+[ -f $HOME/.lesshst ] && rm $HOME/.lesshst
+[ -f $HOME/.bash_history ] && rm $HOME/.bash_history
 
-say "Setting some files for root."
+say "Configuring some files for root."
 sudo cp $DOTDIR/house/.bashrc /root
 sudo cp $DOTDIR/house/.bash_profile /root
 sudo cp -r $DOTDIR/house/.vim /root
-mkdir -p /root/.config
+sudo mkdir -p /root/.config
+sudo mkdir -p /root/.local/bin
+sudo mkdir -p /root/.local/share
+sudo mkdir -p /root/.cache
 sudo cp -r $DOTDIR/.config/shell /root/.config
 sudo cp -r $DOTDIR/.config/tmux /root/.config
 sudo cp -r $DOTDIR/.config/wget /root/.config
+sudo sed -i '/^BCYAN=/s/^#//' /root/.bashrc     # uncomment ONLY ONE line containing the pattern "^BCYAN="
+sudo sed -i '/^BYELLOW=/s/^/#/' /root/.bashrc   # comment ONLY ONE line containing the pattern "^BYELLOW="
+sudo sed -i '/^PS1.*$/c\PS1=\"\${BCYAN}\[\${BRED}\\u\${BGREEN}@\${BBLUE}\\h \${BMAGENTA}\\W\${BCYAN}\]\${GREEN}\\\$ \${WHITE}\"' /root/.bashrc  # change PS1
+sudo sed -i '/music/,$d' /root/.bashrc          # delete everything after first pattern match
+sudo sed -i '/complete/,$d' /root/.bash_profile # delete everything after first pattern match
+sudo rm /root/.inputrc
+sudo rm /root/.lesshst
+sudo rm /root/.bash_history
 echo
 
 say "Enabling and disabling some services."
@@ -154,7 +170,8 @@ sudo rm -rf /var/service/agetty-tty6
 sudo ln -sf /etc/sv/dbus /var/service
 sudo ln -sf /etc/sv/elogind /var/service
 sudo ln -sf /etc/sv/NetworkManager /var/service
-sudo sv restart NetworkManager
+sudo sv stop dhcpcd
+sudo sv start NetworkManager
 echo
 
 say "Installation finished. Consider rebooting the system for some service to start properly."

@@ -1,5 +1,5 @@
 # ~/.bash_logout
 
-rm "$HOME"/.xsel.log
-rm "$HOME"/.python_history
-rm "$HOME"/.pulse-cookie
+[ -f $HOME/.xsel.log ] && rm $HOME/.xsel.log
+[ -f $HOME/.python_history ] && rm $HOME/.python_history
+[ -f $HOME/.pulse-cookie ] && rm $HOME/.pulse-cookie
