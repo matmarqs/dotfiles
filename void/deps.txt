@@ -22,6 +22,7 @@ ranger
 unzip
 p7zip
 unrar
+zip
 vim-x11
 intel-ucode
 xf86-video-intel

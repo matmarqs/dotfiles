@@ -1,4 +1,5 @@
-zip
+intel-video-accel
+mesa-dri
 ffmpeg
 fcitx
 fcitx-configtool
@@ -7,13 +8,11 @@ libfcitx
 libfcitx-gtk
 libfcitx-gtk3
 libfcitx-qt5
-ccls
 simple-mtpfs
 ntfs-3g
 fuse-exfat
+ccls
 gsl
-intel-video-accel
-mesa-dri
 python3-matplotlib
 python3-numpy
 python3-scipy
