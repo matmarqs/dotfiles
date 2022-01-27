@@ -49,6 +49,9 @@ say "Installing dependencies with xbps."
 sudo xbps-install -Sy $MYDEPS
 echo
 
+getAns "y" "n" "The dependencies were installed successfully? Continue?" "DEPSOK"
+[ "$DEPSOK" = "n" ] && say "Aborting installation." && exit
+
 say "Copying all files to respective directories."
 cp -r $DOTDIR/house/. $HOME
 sudo cp -r $DOTDIR/etc/. /etc
