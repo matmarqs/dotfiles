@@ -19,13 +19,13 @@ getAns () {
     # $1 = opt1, $2 = opt2, $3 = question, $4 = ans
     printf "\n$3 [$1/$2] "
     read _ans
-    [ ! $_ans = "$1" ] && [ ! $_ans = "$2" ] && getAns "$1" "$2" "$3" "$4" || eval $4="'$_ans'" ; unset _ans
+    [ ! "$_ans" = "$1" ] && [ ! "$_ans" = "$2" ] && getAns "$1" "$2" "$3" "$4" || eval $4="'$_ans'" ; unset _ans
 }
 
 
 say "You can check deps files for dependencies."
 getAns "y" "n" "Your config files will be overwritten. Continue?" "CONTINUE"
-[ $CONTINUE != "y" ] && echo && exit
+[ "$CONTINUE" != "y" ] && echo && exit
 echo
 
 getAns "d" "v" "Do you plan to use this system as desktop (d) or virtual machine (v)?" "USAGE"
@@ -33,20 +33,20 @@ getAns "d" "v" "Do you plan to use this system as desktop (d) or virtual machine
 # getting the variables
 THEUSER=$(whoami)
 DOTDIR=$(dirname "$(realpath $0)")
-if [ $USAGE = "d" ]; then
-    MYDEPS=$(cat "$DOTDIR/deps.txt" "$DOTDIR/desktop/deps-desktop.txt")
+if [ "$USAGE" = "d" ]; then
+    MYDEPS="$(cat "$DOTDIR/deps.txt" "$DOTDIR/desktop/deps-desktop.txt")"
 else
-    MYDEPS=$(cat "$DOTDIR/deps.txt" "$DOTDIR/virtual/deps-virtual.txt")
+    MYDEPS="$(cat "$DOTDIR/deps.txt" "$DOTDIR/virtual/deps-virtual.txt")"
 fi
 
 say "Changing to the best repository I know, upgrading and adding non-free repository."
 echo "repository=https://mirrors.servercentral.com/voidlinux/current" | sudo tee /usr/share/xbps.d/00-repository-main.conf
-sudo xbps-install -Syu && sudo xbps-install -yu void-repo-nonfree # 2 times in case xbps needs to be updated
+sudo xbps-install -Syu && sudo xbps-install -yu void-repo-nonfree   # 2 times in case xbps needs to be updated
 echo "repository=https://mirrors.servercentral.com/voidlinux/current" | sudo tee /usr/share/xbps.d/10-repository-nonfree.conf
 echo
 
 say "Installing dependencies with xbps."
-sudo xbps-install -y $MYDEPS
+sudo xbps-install -y "$MYDEPS"
 echo
 
 say "Copying all files to respective directories."
@@ -56,7 +56,7 @@ sudo cp -r $DOTDIR/usr/. /usr
 echo
 
 # checking if DESKTOP or VIRTUAL
-if [ $USAGE = "d" ]; then
+if [ "$USAGE" = "d" ]; then
     cp -r $DOTDIR/desktop/house/. $HOME
 else
     cp -r $DOTDIR/virtual/house/. $HOME
@@ -140,8 +140,7 @@ say "Deleting residues from default installation."
 [ -f $HOME/.bash_history ] && rm $HOME/.bash_history
 
 say "Configuring some files for root."
-sudo cp $DOTDIR/house/.bashrc /root
-sudo cp $DOTDIR/house/.bash_profile /root
+sudo cp -r $DOTDIR/root/. /root
 sudo cp -r $DOTDIR/house/.vim /root
 sudo mkdir -p /root/.config
 sudo mkdir -p /root/.local/bin
@@ -150,11 +149,6 @@ sudo mkdir -p /root/.cache
 sudo cp -r $DOTDIR/.config/shell /root/.config
 sudo cp -r $DOTDIR/.config/tmux /root/.config
 sudo cp -r $DOTDIR/.config/wget /root/.config
-sudo sed -i '/^BCYAN=/s/^#//' /root/.bashrc     # uncomment ONLY ONE line containing the pattern "^BCYAN="
-sudo sed -i '/^BYELLOW=/s/^/#/' /root/.bashrc   # comment ONLY ONE line containing the pattern "^BYELLOW="
-sudo sed -i '/^PS1.*$/c\PS1=\"\${BCYAN}\[\${BRED}\\u\${BGREEN}@\${BBLUE}\\h \${BMAGENTA}\\W\${BCYAN}\]\${GREEN}\\\$ \${WHITE}\"' /root/.bashrc  # change PS1
-sudo sed -i '/music/,$d' /root/.bashrc          # delete everything after first pattern match
-sudo sed -i '/complete/,$d' /root/.bash_profile # delete everything after first pattern match
 sudo rm /root/.inputrc
 sudo rm /root/.lesshst
 sudo rm /root/.bash_history

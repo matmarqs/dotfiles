@@ -3,7 +3,7 @@
 #
 
 # load bashrc
-[ -f $HOME/.bashrc ] && . $HOME/.bashrc
+[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
 
 # PATH variable
 export PATH="$HOME/.local/bin:$PATH"
@@ -17,7 +17,7 @@ export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/bash_history"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
-export LESS="-R --use-color -Dd+G$-Du+r$-DS+kY$-DE+Y$-DP+Y"
+export LESS="-R --use-color -Dd+G\$-Du+r\$-DS+kY\$-DE+Y\$-DP+Y"
 export MANPAGER="less -R --use-color -Dd+G -Du+r -DS+kY -DE+Y -DP+Y"
 # complete clean-up and settings
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
