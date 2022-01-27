@@ -9,6 +9,7 @@ libfcitx-gtk3
 libfcitx-qt5
 ccls
 simple-mtpfs
+ntfs-3g
 fuse-exfat
 gsl
 intel-video-accel

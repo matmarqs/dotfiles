@@ -2,8 +2,8 @@
 
 hour=$(date '+%H')
 dyncfg="$HOME/.config/dynconf"
-wplight=wallpaper-light.jpg
-wpdark=wallpaper-dark.jpg
+wplight=wallpaper-light.png
+wpdark=wallpaper-dark.png
 #wplight=$(ls $dyncfg | grep wallpaper-light)
 #wpdark=$(ls $dyncfg | grep wallpaper-dark)
 

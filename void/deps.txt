@@ -7,6 +7,8 @@ wget
 acpi
 htop
 fzf
+NetworkManager
+dbus
 elogind
 psmisc
 cronie
