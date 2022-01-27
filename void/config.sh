@@ -60,7 +60,7 @@ if [ "$USAGE" = "d" ]; then
     cp -r $DOTDIR/desktop/house/. $HOME
 else
     cp -r $DOTDIR/virtual/house/. $HOME
-    cp -r $DOTDIR/virtual/etc/. /etc
+    sudo cp -r $DOTDIR/virtual/etc/. /etc
 fi
 
 say "Making scripts executable."
