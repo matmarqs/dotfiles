@@ -1,0 +1,7 @@
+set editing-mode vi
+$if mode=vi
+
+# no delay in bash vi-mode
+set keyseq-timeout 10
+
+$endif

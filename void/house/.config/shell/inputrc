@@ -1,4 +1,1 @@
 $include /etc/inputrc
-
-# no delay in bash vi-mode
-set keyseq-timeout 0.01

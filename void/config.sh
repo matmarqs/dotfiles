@@ -63,7 +63,6 @@ if [ "$USAGE" = "d" ]; then
     cp -r $DOTDIR/desktop/house/. $HOME
 else
     cp -r $DOTDIR/virtual/house/. $HOME
-    sudo cp -r $DOTDIR/virtual/etc/. /etc
 fi
 
 say "Making scripts executable."
@@ -157,8 +156,7 @@ sudo rm /root/.lesshst
 sudo rm /root/.bash_history
 echo
 
-say "Enabling and disabling some services."
-sudo rm -rf /var/service/dhcpcd
+say "Disabling and enabling some services."
 sudo rm -rf /var/service/sshd
 sudo rm -rf /var/service/acpid
 sudo rm -rf /var/service/agetty-tty4
@@ -166,10 +164,17 @@ sudo rm -rf /var/service/agetty-tty5
 sudo rm -rf /var/service/agetty-tty6
 sudo ln -sf /etc/sv/dbus /var/service
 sudo ln -sf /etc/sv/elogind /var/service
-sudo ln -sf /etc/sv/NetworkManager /var/service
-sudo sv stop dhcpcd
-sudo sv start NetworkManager
 echo
 
-say "Installation finished. Consider rebooting the system for some service to start properly."
+getAns "y" "n" "Do you want to disable other network services and enable NetworkManager?" "NETWORKMAN"
+if [ "$NETWORKMAN" = "y" ]; then
+    sudo rm -rf /var/service/dhcpcd
+    sudo rm -rf /var/service/wpa_supplicant
+    sudo ln -sf /etc/sv/NetworkManager /var/service
+    say "You can connect to wifi via"
+    echo "\$ nmcli device wifi connect BSSID password PASSWD ifname INTERFACE"
+    echo
+fi
+
+say "Installation finished. Consider rebooting the system for services to start properly."
 echo

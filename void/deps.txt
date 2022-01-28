@@ -81,4 +81,3 @@ breeze-hacked-cursor-theme
 breeze-icons
 qt5ct
 firefox
-python3-ipython
