@@ -87,8 +87,8 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *browser[]  = { "firefox", NULL };
 static const char *fileman[]  = { "st", "-e", "ranger", NULL };
 static const char *clipman[]  = { "clipmenu", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *printsz[]  = { "scrot", "-s", "$HOME/pictures/prints/%b_%d_%H-%M-%S.png", NULL };
-static const char *printfs[]  = { "scrot", "$HOME/pictures/prints/%b_%d_%H-%M-%S.png", NULL };
+static const char *printsz[]  = { "scrot", "-s", "$HOME/Pictures/prints/%b_%d_%H-%M-%S.png", NULL };
+static const char *printfs[]  = { "scrot", "$HOME/Pictures/prints/%b_%d_%H-%M-%S.png", NULL };
 
 
 static Key keys[] = {
