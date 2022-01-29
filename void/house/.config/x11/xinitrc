@@ -14,12 +14,12 @@ clipmenud &
 xcompmgr &
 $HOME/.config/dynconf/aesthetics
 
-## input method for japanese
-#export GTK_IM_MODULE=fcitx
-#export QT_IM_MODULE=fcitx
-#export SDL_IM_MODULE=fcitx
-#export XMODIFIERS=@im=fcitx
-#fcitx -dr &
+# input method for japanese
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export SDL_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+fcitx -dr &
 
 # initialize gui
 dunst &

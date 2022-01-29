@@ -16,7 +16,7 @@ export LESSHISTFILE="-"
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/bash_history"
-export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+export FZF_DEFAULT_OPTS="--layout=reverse"
 export LESS="-R --use-color -Dd+G\$-Du+r\$-DS+kY\$-DE+Y\$-DP+Y"
 export MANPAGER="less -R --use-color -Dd+G -Du+r -DS+kY -DE+Y -DP+Y"
 # complete clean-up and settings

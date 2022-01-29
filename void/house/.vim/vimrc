@@ -22,12 +22,13 @@ set softtabstop=4                 " backspace will take you to tabstops
 set shiftwidth=4                  " for just Ctrl+d (<<) and Ctrl+t (>>)
 set backspace=indent,eol,start    " more powerful backspaces
 set expandtab                     " convert tabs to spaces
-"set autoindent                   " autoindent on tabs (not code specific)
+"set autoindent                    " autoindent on tabs (not code specific)
 " to replace all tabs with 4 spaces in a file run ':%s/\t/    /g'
 set timeoutlen=2000
 set ttimeoutlen=10
 set history=200
 map Q :w!<CR>
+map <C-z> <C-a>
 " "
 
 " plugins
