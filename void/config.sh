@@ -90,6 +90,7 @@ createFolders () {
     mkdir -p $HOME/.cache $HOME/Music $HOME/Documents $HOME/Workspace $HOME/downloads
     mkdir -p $HOME/Pictures/prints $HOME/Pictures/wallpapers $HOME/Videos $HOME/.local/public
     mkdir -p $HOME/.local/share/mpd/playlists $HOME/.local/share/lyrics
+    mkdir -p $HOME/.config/git && touch $HOME/.config/git/config
 }
 
 deleteTrash () {
