@@ -34,5 +34,9 @@ alias \
     xbi="sudo xbps-install" \
     xbq="xbps-query" \
     xbr="sudo xbps-remove" \
+    xbdb="sudo xbps-pkgdb" \
     pg="ps aux | grep" \
-    fd="source fzfcd"
+    fd="source fzfcd" \
+    chx="chmod +x" \
+    ren="perl-rename" \
+    xsel="xsel --logfile $HOME/.cache/xsel.log"

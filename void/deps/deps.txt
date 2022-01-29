@@ -6,6 +6,7 @@ curl
 wget
 acpi
 htop
+perl-rename
 fzf
 NetworkManager
 dbus
@@ -61,6 +62,7 @@ zathura-pdf-mupdf
 zathura-djvu
 clipmenu
 parcellite
+xclip
 xcompmgr
 dunst
 scrot
