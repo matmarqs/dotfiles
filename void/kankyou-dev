@@ -1,0 +1,65 @@
+#!/bin/sh
+
+displayHelp () {
+   # Display displayHelp
+   echo "Usage: kankyou [OPTIONS] BACK REAL"
+   echo
+   echo "OPTIONS"
+   echo "-h     Print help usage"
+   echo "-n     Compare only existing, but different files [default mode]"
+   echo "-m     See only missing files"
+   echo "-V     Print software version and exit"
+}
+
+getVariables () {
+    if [ $3 -gt 2 ]; then
+        echo 1>&2 "kankyou: too many arguments. I only compare 2."
+        exit 2
+    elif [ $3 -lt 1 ]; then
+        echo 1>&2 "kankyou: not enough arguments. You need to specify at least the source path."
+        echo 1>&2 "kankyou: maybe you wanted to say 'kankyou .'?"
+        exit 2
+    elif [ $3 = 1 ]; then
+        REAL="$HOME"
+    else
+        REAL="$(realpath $2)"
+    fi
+    BACK="$(realpath $1)"
+}
+
+diffExisting () {
+    FILES=$(diff -qr "$BACK" "$REAL" | grep -v '^Only in' | awk '{print $2} {print $4}')
+
+    if [ -z "$FILES" ]; then
+        echo 1>&2 "kankyou: there are no files sharing the same name."
+        echo 1>&2 "kankyou: did you really specified the intended directories?"
+        exit 2
+    elif [ "$REAL" = "$HOME" ]; then
+        TARGET=$(echo $FILES | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath --relative-to=$HOME | fzf)
+    else
+        TARGET=$(echo $FILES | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath | fzf)
+    fi
+
+    echo $FILES | xargs -n 2 | grep $TARGET | xargs git diff
+}
+
+showMissing () {
+    diff -qr $BACK $REAL
+}
+
+while getopts ":hnm:" option; do
+    case $option in
+        h) # display help
+            displayHelp
+            exit;;
+        n) # normal, compare only existing different files
+            getVariables "$1" "$2" "$#"
+            diffExisting;;
+        m)
+            getVariables "$1" "$2" "$#"
+            showMissing;;
+        \?) # invalid option
+            echo "kankyou: invalid option."
+            exit;;
+    esac
+done

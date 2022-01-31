@@ -58,9 +58,10 @@ nnoremap <CR> o<Esc>0d$
 inoremap <C-f> <C-x><C-f>
 
 " removing trailing white spaces
-autocmd BufWritePre *.py,*.c,*.h,*.lua,*.vim,*.tex,*.rmd :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
 
 " sourcing configs
+autocmd FileType sh source $HOME/.vim/sh.vim
 autocmd BufRead,BufNewfile *.c,*.h source $HOME/.vim/c.vim
 autocmd BufRead,BufNewFile *.py    source $HOME/.vim/python.vim
 autocmd BufRead,BufNewFile *.lua   source $HOME/.vim/lua.vim

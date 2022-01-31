@@ -36,7 +36,8 @@ alias \
     xbr="sudo xbps-remove" \
     xbdb="sudo xbps-pkgdb" \
     pg="ps aux | grep" \
-    fd="source fzfcd" \
+    f="source fzfcd" \
     chx="chmod +x" \
     ren="perl-rename" \
-    xsel="xsel --logfile $HOME/.cache/xsel.log"
+    xsel="xsel --logfile $HOME/.cache/xsel.log" \
+    clip="xclip -i -selection clipboard"

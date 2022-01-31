@@ -33,8 +33,10 @@ BACK="$(realpath $1)"
 FILES=$(diff -qr "$BACK" "$REAL" | grep -v '^Only in' | awk '{print $2} {print $4}')
 
 if [ -z "$FILES" ]; then
-    echo 1>&2 "$KANKYOU: there are no files sharing the same name."
-    echo 1>&2 "$KANKYOU: did you really specified the intended directories?"
+    echo 1>&2 "$KANKYOU: no files sharing the same name differ."
+    echo 1>&2 "$KANKYOU: there are two possibilities:"
+    echo 1>&2 "$KANKYOU: 1. everything is up to date."
+    echo 1>&2 "$KANKYOU: 2. you have misspecified the directories."
     exit 2
 elif [ "$REAL" = "$HOME" ]; then
     TARGET=$(echo $FILES | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath --relative-to=$HOME | fzf)
