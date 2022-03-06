@@ -41,15 +41,13 @@ source "$HOME/.config/shell/aliasrc"
 ## some functions to make life easier
 # compiles a basic C program and runs it
 c () {
-	gcc -O2 -lm $1 && ./a.out
+   PROGDIR="$(dirname "$1")"
+   gcc -g -Wall -O2 "$1" -lm -o "$PROGDIR"/a.out #&& "$PROGDIR"/a.out
 }
 # compiles a C math program that uses the GSL library
 cgsl () {
-	gcc -I/usr/include -g -Wall -O3 $1 -L/usr/lib -lpthread -lgsl -lgslcblas -lm
-}
-# compiles a C math program that uses the GSL, GMP, FLINT libraries
-cm () {
-	gcc -I/usr/include -g -Wall -O3 $1 -L/usr/lib -lflint -lmpfr -lgmp -lpthread -lgsl -lgslcblas -lm
+   PROGDIR="$(dirname "$1")"
+	gcc -std=gnu99 -g -Wall -O2 "$1" -lgsl -lgslcblas -lm -o "$PROGDIR"/a.out
 }
 # for music: check if mpd is running, if not it starts it. Then it opens ncmpcpp
 music () {

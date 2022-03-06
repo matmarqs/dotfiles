@@ -11,7 +11,7 @@ libfcitx-qt5
 simple-mtpfs
 ntfs-3g
 fuse-exfat
-ccls
+clang-tools-extra
 gsl
 python3-ipython
 python3-tkinter

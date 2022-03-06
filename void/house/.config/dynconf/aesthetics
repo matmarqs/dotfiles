@@ -1,20 +1,19 @@
-#!/bin/bash
+#!/bin/sh
+# This script must be in the same directory as the dynconf files
 
 hour=$(date '+%H')
-dyncfg="$HOME/.config/dynconf"
-wplight=wallpaper-light.png
-wpdark=wallpaper-dark.png
-#wplight=$(ls $dyncfg | grep wallpaper-light)
-#wpdark=$(ls $dyncfg | grep wallpaper-dark)
+dyncfg=$(dirname "$0")
+wplight=$(ls "$dyncfg"/wallpaper-light*)
+wpdark=$(ls "$dyncfg"/wallpaper-dark*)
 
-if [[ 10#$hour -ge 7 && 10#$hour -le 17 ]]; then
-	feh --no-fehbg --bg-scale $dyncfg/$wplight
-	cp $dyncfg/gtkrc-light $HOME/.config/gtk-2.0/gtkrc
-	cp $dyncfg/settings.ini-light $HOME/.config/gtk-3.0/settings.ini
-	cp $dyncfg/zathurarc-light $HOME/.config/zathura/zathurarc
+if [ "$hour" -gt "6" ] && [ "$hour" -lt "18" ]; then
+	DISPLAY=:0 feh --no-fehbg --bg-scale "$wplight"
+	cp "$dyncfg"/gtkrc-light "$HOME"/.config/gtk-2.0/gtkrc
+	cp "$dyncfg"/settings.ini-light "$HOME"/.config/gtk-3.0/settings.ini
+	cp "$dyncfg"/zathurarc-light "$HOME"/.config/zathura/zathurarc
 else
-	feh --no-fehbg --bg-scale $dyncfg/$wpdark
-	cp $dyncfg/gtkrc-dark $HOME/.config/gtk-2.0/gtkrc
-	cp $dyncfg/settings.ini-dark $HOME/.config/gtk-3.0/settings.ini
-	cp $dyncfg/zathurarc-dark $HOME/.config/zathura/zathurarc
+	DISPLAY=:0 feh --no-fehbg --bg-scale "$wpdark"
+	cp "$dyncfg"/gtkrc-dark "$HOME"/.config/gtk-2.0/gtkrc
+	cp "$dyncfg"/settings.ini-dark "$HOME"/.config/gtk-3.0/settings.ini
+	cp "$dyncfg"/zathurarc-dark "$HOME"/.config/zathura/zathurarc
 fi

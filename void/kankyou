@@ -1,47 +1,135 @@
 #!/bin/sh
 
-Help()
-{
-   # Display Help
-   echo "Kankyou: compare two environments."
-   echo
-   echo "Syntax: kankyou [OPTIONS] BACK REAL"
-   echo "options:"
-   echo "h     Print this Help."
-   echo "n     Compare only existing, but different files."
-   echo "m     See only missing files."
-   echo "V     Print software version and exit."
-   echo
+# Package dependencies:
+# TLDR: fzf, POSIX compliant shell (dash, bash, zsh etc.) and base package
+#
+# All programs used:
+#     1. fzf (https://github.com/junegunn/fzf)
+#     2. provided by base/base-system package in Linux distros:
+#        realpath, echo (GNU coreutils)
+#        grep (GNU grep)
+#        gawk (GNU awk)
+#        sed (GNU sed)
+#        diff (GNU diffutils)
+#        xargs (GNU findutils)
+
+say () {
+    printf "\n%s\n" "$1"
 }
 
-KANKYOU="$(basename "$0")"
+getAns () {
+    # $1 = opt1, $2 = opt2, $3 = question, $4 = ans
+    printf "\n%s [%s/%s] " "$3" "$1" "$2"
+    read -r _ans
+    if [ ! "$_ans" = "$1" ]; then
+       [ ! "$_ans" = "$2" ] && getAns "$1" "$2" "$3" "$4"
+    else
+       eval "$4"="'$_ans'" ; unset _ans
+    fi
+}
 
-if [ $# -gt 2 ]; then
-    echo 1>&2 "$KANKYOU: too many arguments. I only compare 2."
-    exit 2
-elif [ $# -lt 1 ]; then
-    echo 1>&2 "$KANKYOU: not enough arguments. You need to specify at least the source path."
-    echo 1>&2 "$KANKYOU: maybe you wanted to say 'kankyou .'?"
-    exit 2
-elif [ $# = 1 ]; then
-    REAL="$HOME"
-else
-    REAL="$(realpath $2)"
-fi
+displayHelp () {
+   echo "Usage: kankyou [OPTIONS] CLONE REAL"
+   echo
+   echo "Explanation:"
+   echo "CLONE is a clone of the REAL environment, usually for backup purposes."
+   echo "For instance, REAL=\$HOME and CLONE=\$HOME/.dotfiles."
+   echo
+   echo "OPTIONS"
+   echo "-h    Print help usage"
+   echo "-n    Compare only existing, but different files [default mode]"
+   echo "-m    See only missing files"
+}
 
-BACK="$(realpath $1)"
-FILES=$(diff -qr "$BACK" "$REAL" | grep -v '^Only in' | awk '{print $2} {print $4}')
+getVariables () {
+   if [ "$3" -gt 2 ]; then
+      echo 1>&2 "kankyou: too many arguments. I accept at most 2."
+      exit 2
+   elif [ "$3" -lt 1 ]; then
+      echo 1>&2 "kankyou: not enough arguments. You need to specify at least the source path."
+      echo 1>&2 "         maybe you wanted to say 'kankyou .'?"
+      exit 2
+   elif [ "$3" = 1 ]; then
+      REAL="$HOME"
+   else
+      REAL="$(realpath "$2")"
+   fi
+   CLONE="$(realpath "$1")"
+}
 
-if [ -z "$FILES" ]; then
-    echo 1>&2 "$KANKYOU: no files sharing the same name differ."
-    echo 1>&2 "$KANKYOU: there are two possibilities:"
-    echo 1>&2 "$KANKYOU: 1. everything is up to date."
-    echo 1>&2 "$KANKYOU: 2. you have misspecified the directories."
-    exit 2
-elif [ "$REAL" = "$HOME" ]; then
-    TARGET=$(echo $FILES | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath --relative-to=$HOME | fzf)
-else
-    TARGET=$(echo $FILES | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath | fzf)
-fi
+getTargetFiles () {
+   FILES=$(diff -qr "$CLONE" "$REAL" | grep -v '^Only in' | awk '{print $2} {print $4}')
+   if [ -z "$FILES" ]; then
+      echo 1>&2 "kankyou: there are no files sharing the same name."
+      echo 1>&2 "         did you really specified the intended directories?"
+      exit 2
+   elif [ "$REAL" = "$HOME" ]; then
+      TARGET=$(echo "$FILES" | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath --relative-to="$HOME" | fzf)
+   else
+      TARGET=$(echo "$FILES" | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath | fzf)
+   fi
+   # if TARGET was not selected, exit
+   [ -z "$TARGET" ] && exit 0
+}
 
-echo $FILES | xargs -n 2 | grep $TARGET | xargs git diff
+diffExisting () {
+   echo "$FILES" | xargs -n 2 | grep "$TARGET" | xargs diff --color=always -- | less -R
+}
+
+showMissing () {
+   diff -qr "$CLONE" "$REAL" | grep "^Only in" | grep -v "^Only in $CLONE" |
+      sed "s/^Only in //;
+           s/: /\//;
+           s/\/home\/[a-zA-Z]*\///;
+           /^[^\.]/d" | fzf
+}
+
+overwriteClone () {
+   cp "$REAL"/"$TARGET" "$CLONE"/"$TARGET"
+}
+
+overwriteReal () {
+   cp "$CLONE"/"$TARGET" "$REAL"/"$TARGET"
+}
+
+
+while getopts ":hnmcr:" option; do
+   case $option in
+   h) # display help
+      displayHelp
+      exit;;
+   n) # normal, compare only existing different files
+      shift
+      getVariables "$1" "$2" "$#"
+      getTargetFiles
+      diffExisting
+      exit;;
+   m) # missing files
+      shift
+      getVariables "$1" "$2" "$#"
+      showMissing
+      exit;;
+   c) # overwrite CLONE to be up to date with REAL
+      shift
+      getVariables "$1" "$2" "$#"
+      getTargetFiles
+      getAns "y" "n" "Are you sure you want to overwrite \$CLONE/$TARGET?" "OVERWRITE"
+      [ "$OVERWRITE" != "y" ] && say "Nothing was done." && exit
+      overwriteClone
+      say "The file \$CLONE/$TARGET is now up to date with \$REAL."
+      exit;;
+   r) # overwrite REAL to be up to date with CLONE
+      shift
+      getVariables "$1" "$2" "$#"
+      getTargetFiles
+      say "We are going to overwrite some file in your \$REAL directory. This may break up your system."
+      getAns "y" "n" "Are you sure you want to overwrite \$REAL/$TARGET?" "OVERWRITE"
+      [ "$OVERWRITE" != "y" ] && say "Nothing was done." && exit
+      overwriteReal
+      say "The file \$REAL/$TARGET is now up to date with \$CLONE."
+      exit;;
+   \?) # invalid option
+      echo "kankyou: invalid option."
+      exit;;
+   esac
+done

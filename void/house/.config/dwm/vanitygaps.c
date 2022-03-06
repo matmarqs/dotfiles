@@ -14,11 +14,11 @@ static void bstack(Monitor *m);
 static void centeredmaster(Monitor *m);
 static void centeredfloatingmaster(Monitor *m);
 static void deck(Monitor *m);
-//static void dwindle(Monitor *m);
+static void dwindle(Monitor *m);
 static void fibonacci(Monitor *m, int s);
 //static void grid(Monitor *m);
 //static void nrowgrid(Monitor *m);
-static void spiral(Monitor *m);
+//static void spiral(Monitor *m);
 static void tile(Monitor *m);
 /* Internals */
 static void getgaps(Monitor *m, int *oh, int *ov, int *ih, int *iv, unsigned int *nc);
@@ -555,17 +555,17 @@ fibonacci(Monitor *m, int s)
 	}
 }
 
-//void
-//dwindle(Monitor *m)
-//{
-//	fibonacci(m, 1);
-//}
-
 void
-spiral(Monitor *m)
+dwindle(Monitor *m)
 {
-	fibonacci(m, 0);
+    fibonacci(m, 1);
 }
+
+//void
+//spiral(Monitor *m)
+//{
+//	fibonacci(m, 0);
+//}
 
 /*
  * Gappless grid layout + gaps (ironically)

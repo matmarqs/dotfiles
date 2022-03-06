@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # sudo not required for some system commands
 for command in mount umount sv su poweroff reboot zzz ; do
@@ -39,5 +39,8 @@ alias \
     f="source fzfcd" \
     chx="chmod +x" \
     ren="perl-rename" \
-    xsel="xsel --logfile $HOME/.cache/xsel.log" \
-    clip="xclip -i -selection clipboard"
+    xsel="xsel --logfile \$HOME/.cache/xsel.log" \
+    clip="xclip -i -selection clipboard" \
+    aest="\$HOME/.config/dynconf/aesthetics" \
+    h="htop" \
+    ka="killall"

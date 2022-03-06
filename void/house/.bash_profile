@@ -21,9 +21,10 @@ export LESS="-R --use-color -Dd+G\$-Du+r\$-DS+kY\$-DE+Y\$-DP+Y"
 export MANPAGER="less -R --use-color -Dd+G -Du+r -DS+kY -DE+Y -DP+Y"
 # complete clean-up and settings
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # this line will break some DMs.
+#export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # this line breaks a lot of applications that assume ~/.Xauthority
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc"
 export IPYTHONDIR="${XDG_DATA_HOME:-$HOME/.local/share}/ipython"
+export MAXIMA_USERDIR="${XDG_CONFIG_HOME:-$HOME/.config}/maxima"
 export SSB_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zoom"
 export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"

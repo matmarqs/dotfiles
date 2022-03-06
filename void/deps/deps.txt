@@ -40,9 +40,9 @@ xset
 xsetroot
 alsa-utils
 alsa-plugins
-alsa-plugins-pulseaudio
-apulse
-pulseaudio
+pulseaudio-utils
+pipewire
+alsa-pipewire
 mpc
 pavucontrol
 playerctl

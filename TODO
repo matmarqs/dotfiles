@@ -1,2 +1,26 @@
 improve kankyou
 dwm, dwmblocks and st moved to .config instead of .local
+needs to fix this change in config.sh
+change ccls to clangd (package clang-tools-extra)
+
+ban pulseaudio, now I use pipewire
+have to make some symlinks to configure ALSA with PipeWire.
+https://docs.voidlinux.org/config/media/pipewire.html
+
+touch down instead of removing the service, according to https://docs.voidlinux.org/config/services/index.html#enabling-services
+this makes disabling persistent across update of the runit-void package
+
+keymap changed, I was able to swap Alt and Win in console (tty)
+
+blacklist uvcvideo for disabling Webcam by default
+
+
+new setup dwm-patches:
+
+functionalgaps # lembro de NAO ter gostado do functional gaps
+pertag
+focusfullscreen vs actualfullscreen
+fibonacci: dwindle
+rotatetags
+push vs movestack
+alpha: fixborders

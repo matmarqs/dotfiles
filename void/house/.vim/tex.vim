@@ -9,7 +9,7 @@ map k gk
 map $ g$
 
 " normal mode
-nnoremap <Leader>c :w<CR>:!pdflatex<Space>%<CR><CR>
+nnoremap <Leader>c :w<CR>:!pdflatex<Space>-shell-escape<Space>%<CR><CR>
 nnoremap <LocalLeader>c :w<CR>:!pdflatex<Space>%<CR><CR>:!latexmk<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>
 nnoremap <Leader>o :!zathura --fork %:t:r.pdf<CR><CR>
 
