@@ -19,3 +19,4 @@ python3-matplotlib
 python3-numpy
 python3-scipy
 qutebrowser
+python3-PyQt5-svg

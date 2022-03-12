@@ -18,6 +18,3 @@ map u zoom out
 
 # only name of the file, not full path
 set statusbar-basename true
-
-# reverting colors
-set recolor true

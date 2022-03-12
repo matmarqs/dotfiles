@@ -53,7 +53,7 @@ static const Layout layouts[] = {
 	       /* symbol     arrange function */
 /*  0  */  { "[]=",      tile },    /* first entry is default */
 /*  1  */  { "|M|",      centeredmaster },
-/*  2  */  { "[@]",      spiral },
+/*  2  */  { "[\\]",     dwindle },
 /*  3  */  { ":::",      gaplessgrid },
 /*  4  */  { ">M>",      centeredfloatingmaster },
 /*  5  */  { "D[]",      deck },
@@ -63,7 +63,7 @@ static const Layout layouts[] = {
            { NULL,       NULL },
 /*  ?  *///{ "---",      horizgrid },
 /*  ?  *///{ "HHH",      grid },
-/*  ?  *///{ "[\\]",     dwindle },
+/*  2  *///{ "[@]",      spiral },
 /*  ?  *///{ "###",      nrowgrid },
 /*  ?  *///{ "===",      bstackhoriz },
 };
@@ -85,10 +85,10 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browser[]  = { "firefox", NULL };
+static const char *ankijap[]  = { "anki", NULL };
 static const char *fileman[]  = { "st", "-e", "ranger", NULL };
 static const char *clipman[]  = { "clipmenu", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *printsz[]  = { "scrot", "-s", "$HOME/Pictures/prints/%b_%d_%H-%M-%S.png", NULL };
-static const char *printfs[]  = { "scrot", "$HOME/Pictures/prints/%b_%d_%H-%M-%S.png", NULL };
+static const char *gradehr[]  = { "zathura", "~/Documents/6-semestre.pdf", NULL };
 
 
 static Key keys[] = {
@@ -96,21 +96,23 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,          spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_w,          spawn,          {.v = browser } },
+	{ MODKEY|ShiftMask,             XK_a,          spawn,          {.v = ankijap } },
 	{ MODKEY|ShiftMask,             XK_Return,     spawn,          {.v = fileman } },
 	{ MODKEY,                       XK_backslash,  spawn,          {.v = clipman } },
-	{ 0,                            XK_Print,      spawn,          {.v = printsz } },
-	{ MODKEY,                       XK_Print,      spawn,          {.v = printfs } },
+	{ 0,                            XK_Print,      spawn,          SHCMD("scrot -s ~/Pictures/prints/%b_%d_%H-%M-%S.png") },    // print selected
+	{ MODKEY,                       XK_Print,      spawn,          SHCMD("scrot ~/Pictures/prints/%b_%d_%H-%M-%S.png") },       // print fullscreen
+	{ MODKEY,                       XK_F1,         spawn,          {.v = gradehr } },
     /************************************************************* LIGHT **************************************************************/
-	{ MODKEY,                       XK_Prior,      spawn,	        SHCMD("xbacklight -inc 5; kill -45 $(pidof dwmblocks)") },          // UP
-	{ MODKEY|ShiftMask,             XK_Prior,      spawn,	        SHCMD("xbacklight -inc 15; kill -45 $(pidof dwmblocks)") },         // BIG UP
-	{ MODKEY,                       XK_Next,       spawn,	        SHCMD("xbacklight -dec 5; kill -45 $(pidof dwmblocks)") },          // DOWN
-	{ MODKEY|ShiftMask,             XK_Next,       spawn,	        SHCMD("xbacklight -dec 15; kill -45 $(pidof dwmblocks)") },         // BIG DOWN
+	{ MODKEY,                       XK_Prior,      spawn,	       SHCMD("xbacklight -inc 5; kill -45 $(pidof dwmblocks)") },           // UP
+	{ MODKEY|ShiftMask,             XK_Prior,      spawn,	       SHCMD("xbacklight -inc 15; kill -45 $(pidof dwmblocks)") },          // BIG UP
+	{ MODKEY,                       XK_Next,       spawn,	       SHCMD("xbacklight -dec 5; kill -45 $(pidof dwmblocks)") },           // DOWN
+	{ MODKEY|ShiftMask,             XK_Next,       spawn,	       SHCMD("xbacklight -dec 15; kill -45 $(pidof dwmblocks)") },          // BIG DOWN
     /************************************************************* VOLUME *************************************************************/
-	{ MODKEY,                       XK_equal,      spawn,          SHCMD("amixer -q set Master 5%+; kill -44 $(pidof dwmblocks)") },    // UP
-	{ MODKEY|ShiftMask,             XK_equal,      spawn,          SHCMD("amixer -q set Master 15%+; kill -44 $(pidof dwmblocks)") },   // BIG UP
-	{ MODKEY,                       XK_minus,      spawn,          SHCMD("amixer -q set Master 5%-; kill -44 $(pidof dwmblocks)") },    // DOWN
-	{ MODKEY|ShiftMask,             XK_minus,      spawn,          SHCMD("amixer -q set Master 15%-; kill -44 $(pidof dwmblocks)") },   // BIG DOWN
-	{ MODKEY,                       XK_BackSpace,  spawn,          SHCMD("amixer -q set Master toggle; kill -44 $(pidof dwmblocks)") }, // PLAY-PAUSE
+	{ MODKEY,                       XK_equal,      spawn,          SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") },  // UP
+	{ MODKEY|ShiftMask,             XK_equal,      spawn,          SHCMD("pamixer --allow-boost -i 15; kill -44 $(pidof dwmblocks)") }, // BIG UP
+	{ MODKEY,                       XK_minus,      spawn,          SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") },  // DOWN
+	{ MODKEY|ShiftMask,             XK_minus,      spawn,          SHCMD("pamixer --allow-boost -d 15; kill -44 $(pidof dwmblocks)") }, // BIG DOWN
+	{ MODKEY,                       XK_BackSpace,  spawn,          SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },                  // PLAY-PAUSE
     /************************************************************* MUSIC **************************************************************/
 	{ MODKEY|ControlMask,           XK_equal,      spawn,          SHCMD("/usr/local/scripts/music-vol_up") },      // UP
 	{ MODKEY|ControlMask,           XK_Up,         spawn,          SHCMD("/usr/local/scripts/music-vol_up") },      // UP
@@ -163,7 +165,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_q,          setlayout,      {.v = &layouts[0]} }, // tile
 	{ MODKEY,                       XK_w,          setlayout,      {.v = &layouts[7]} }, // monocle
 	{ MODKEY,                       XK_e,          setlayout,      {.v = &layouts[8]} }, // floating
-	{ MODKEY,                       XK_s,          setlayout,      {.v = &layouts[2]} }, // spiral
+	{ MODKEY,                       XK_s,          setlayout,      {.v = &layouts[2]} }, // dwindle
 	{ MODKEY,                       XK_y,          setlayout,      {.v = &layouts[5]} }, // deck
 	{ MODKEY,                       XK_u,          setlayout,      {.v = &layouts[3]} }, // ::: gapless grid
 	{ MODKEY|ShiftMask,             XK_u,          setlayout,      {.v = &layouts[6]} }, // TTT bstack
@@ -172,7 +174,7 @@ static Key keys[] = {
     /***********************************  some useless layouts i think ***********************************/
 //	{ MODKEY,                       XK_?,          setlayout,      {.v = &layouts[??]} }, // --- horizgrid
 //	{ MODKEY,                       XK_?,          setlayout,      {.v = &layouts[??]} }, // HHH grid
-//	{ MODKEY,                       XK_?,          setlayout,      {.v = &layouts[??]} }, // dwindle
+//  { MODKEY,                       XK_s,          setlayout,      {.v = &layouts[2]} },  // spiral
 //	{ MODKEY|ShiftMask,             XK_?,          setlayout,      {.v = &layouts[??]} }, // ### nrowgrid
 //	{ MODKEY|ShiftMask,             XK_?,          setlayout,      {.v = &layouts[8]}  }, // === bstack horiz
     /*****************************************************************************************************/

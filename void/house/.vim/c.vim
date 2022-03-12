@@ -19,6 +19,7 @@ inoremap <Leader>im #include <math.h><CR>
 inoremap <Leader>v void (<++>) {<CR><++>;<CR>}<CR><++><Esc>3kf(i
 inoremap <Leader>d double (<++>) {<CR><++>;<CR>}<CR><++><Esc>3kf(i
 inoremap <Leader>I int (<++>) {<CR><++>;<CR>}<CR><++><Esc>3kf(i
+inoremap <Leader>m int main(int argc, char *argv[]) {<CR>;<CR>return 0;<CR>}<Esc>2kf;i
 inoremap <Leader>c /*  */<Esc>2hi
 nnoremap <Leader>c i/*  */<Esc>2hi
 " function prototypes

@@ -5,8 +5,8 @@ status="$(acpi | awk -F',' '{print $1}' | awk '{print $3}')"
 
 if [ "$bat" -lt 15 ] && [ "$status" = "Discharging" ]
 then
-  notify-send -u critical "BATERIA ACABANDO!"
+  DISPLAY=:0 notify-send -u critical "BATERIA ACABANDO!"
 elif [ "$bat" -lt 35 ] && [ "$status" = "Discharging" ]
 then
-  notify-send "Bateria baixa!"
+  DISPLAY=:0 notify-send "Bateria baixa!"
 fi

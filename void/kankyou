@@ -1,25 +1,27 @@
 #!/bin/sh
 
 # Package dependencies:
-# TLDR: fzf, POSIX compliant shell (dash, bash, zsh etc.) and base package
+# TLDR: fzf, POSIX shell (dash, bash, zsh etc.) and base packages (base, base-devel or equivalents)
 #
 # All programs used:
 #     1. fzf (https://github.com/junegunn/fzf)
-#     2. provided by base/base-system package in Linux distros:
-#        realpath, echo (GNU coreutils)
+#     2. standard utils provided by base and base-devel packages in Linux distros:
+#        realpath, echo, printf (GNU coreutils)
 #        grep (GNU grep)
 #        gawk (GNU awk)
 #        sed (GNU sed)
 #        diff (GNU diffutils)
 #        xargs (GNU findutils)
 
+prname="kankyou"  # program name
+
 say () {
-    printf "\n%s\n" "$1"
+    printf "%s\n" "$1"
 }
 
 getAns () {
     # $1 = opt1, $2 = opt2, $3 = question, $4 = ans
-    printf "\n%s [%s/%s] " "$3" "$1" "$2"
+    printf "%s [%s/%s] " "$3" "$1" "$2"
     read -r _ans
     if [ ! "$_ans" = "$1" ]; then
        [ ! "$_ans" = "$2" ] && getAns "$1" "$2" "$3" "$4"
@@ -29,26 +31,31 @@ getAns () {
 }
 
 displayHelp () {
-   echo "Usage: kankyou [OPTIONS] CLONE REAL"
+   echo "Usage: $prname [ONE OPTION] \$CLONE \$REAL"
    echo
-   echo "Explanation:"
-   echo "CLONE is a clone of the REAL environment, usually for backup purposes."
+   echo "DESCRIPTION"
+   echo "\$CLONE is a clone of the \$REAL environment, usually for backup purposes."
+   echo "If not explicitly specified, \$REAL is set to \$HOME by default."
    echo "For instance, REAL=\$HOME and CLONE=\$HOME/.dotfiles."
+   echo "The variable \$TARGET is the file selected by the user, with its path relative to \$REAL."
    echo
    echo "OPTIONS"
-   echo "-h    Print help usage"
-   echo "-n    Compare only existing, but different files [default mode]"
-   echo "-m    See only missing files"
+   echo "-h    Print this help message."
+   echo "-n    Compare existing, but different files with the same name [default mode]."
+   echo "-m    Show missing files."
+   echo "-c    Overwrite \$CLONE/\$TARGET to be up to date with REAL/\$TARGET."
+   echo "-r    Overwrite \$REAL/\$TARGET to be up to date with CLONE/\$TARGET."
+   echo "-d    Print variables, debug only."
 }
 
 getVariables () {
    if [ "$3" -gt 2 ]; then
-      echo 1>&2 "kankyou: too many arguments. I accept at most 2."
-      exit 2
+      echo "$prname: too many arguments. I accept at most 2." >&2
+      exit 1
    elif [ "$3" -lt 1 ]; then
-      echo 1>&2 "kankyou: not enough arguments. You need to specify at least the source path."
-      echo 1>&2 "         maybe you wanted to say 'kankyou .'?"
-      exit 2
+      echo "$prname: not enough arguments. You need to specify at least the source path." >&2
+      echo "         maybe you intended '$prname .'?" >&2
+      exit 1
    elif [ "$3" = 1 ]; then
       REAL="$HOME"
    else
@@ -60,13 +67,14 @@ getVariables () {
 getTargetFiles () {
    FILES=$(diff -qr "$CLONE" "$REAL" | grep -v '^Only in' | awk '{print $2} {print $4}')
    if [ -z "$FILES" ]; then
-      echo 1>&2 "kankyou: there are no files sharing the same name."
-      echo 1>&2 "         did you really specified the intended directories?"
-      exit 2
-   elif [ "$REAL" = "$HOME" ]; then
-      TARGET=$(echo "$FILES" | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath --relative-to="$HOME" | fzf)
+      echo "$prname: no different files sharing the same name in the specified directories." >&2
+      echo "         there are three possibilities:" >&2
+      echo "         1. the directories are up to date with each other." >&2
+      echo "         2. did you really specified the intended directories?" >&2
+      echo "         3. do you have read permissions in both directories?" >&2
+      exit 1
    else
-      TARGET=$(echo "$FILES" | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath | fzf)
+      TARGET=$(echo "$FILES" | xargs -n 2 | awk '{print $2}' | xargs -n 1 realpath --relative-to="$REAL" | fzf)
    fi
    # if TARGET was not selected, exit
    [ -z "$TARGET" ] && exit 0
@@ -77,59 +85,73 @@ diffExisting () {
 }
 
 showMissing () {
-   diff -qr "$CLONE" "$REAL" | grep "^Only in" | grep -v "^Only in $CLONE" |
+   diff -qr "$CLONE" "$REAL" | grep "^Only in" | grep -v "$CLONE" |
       sed "s/^Only in //;
            s/: /\//;
            s/\/home\/[a-zA-Z]*\///;
-           /^[^\.]/d" | fzf
+           /^[^\.]/d" | fzf            # THERE IS A PROBLEM IN THIS SED for './kankyou -d usr/ /usr/'
 }
 
 overwriteClone () {
-   cp "$REAL"/"$TARGET" "$CLONE"/"$TARGET"
+   getAns "y" "n" "Are you sure you want to overwrite \$CLONE/$TARGET?" "OVERWRITE"
+   [ "$OVERWRITE" != "y" ] && echo "Nothing was done." && exit 0
+   cp "$REAL"/"$TARGET" "$CLONE"/"$TARGET" && echo "The file \$CLONE/$TARGET is now up to date with \$REAL." && exit 0
+   echo "$prname: could not copy \$REAL/\$TARGET to \$CLONE/\$TARGET." >&2
+   echo "         \$TARGET=\"$TARGET\"" >&2
+   echo "         \$REAL=\"$REAL\"" >&2
+   echo "         \$CLONE=\"$CLONE\"" >&2
+   exit 1
 }
 
 overwriteReal () {
-   cp "$CLONE"/"$TARGET" "$REAL"/"$TARGET"
+   echo "We are going to overwrite some file in your \$REAL directory. This may break up your system."
+   getAns "y" "n" "Are you sure you want to overwrite \$REAL/$TARGET?" "OVERWRITE"
+   [ "$OVERWRITE" != "y" ] && echo "Nothing was done." && exit 0
+   cp "$CLONE"/"$TARGET" "$REAL"/"$TARGET" && echo "The file \$REAL/$TARGET is now up to date with \$CLONE." && exit 0
+   echo "$prname: could not copy \$CLONE/\$TARGET to \$REAL/\$TARGET." >&2
+   echo "         \$TARGET=\"$TARGET\"" >&2
+   echo "         \$REAL=\"$REAL\"" >&2
+   echo "         \$CLONE=\"$CLONE\"" >&2
+   exit 1
 }
 
 
-while getopts ":hnmcr:" option; do
+while getopts ":hnmcrd:" option; do
    case $option in
    h) # display help
       displayHelp
-      exit;;
+      exit 0;;
    n) # normal, compare only existing different files
       shift
       getVariables "$1" "$2" "$#"
       getTargetFiles
       diffExisting
-      exit;;
+      exit 0;;
    m) # missing files
       shift
       getVariables "$1" "$2" "$#"
       showMissing
-      exit;;
+      exit 0;;
    c) # overwrite CLONE to be up to date with REAL
       shift
       getVariables "$1" "$2" "$#"
       getTargetFiles
-      getAns "y" "n" "Are you sure you want to overwrite \$CLONE/$TARGET?" "OVERWRITE"
-      [ "$OVERWRITE" != "y" ] && say "Nothing was done." && exit
       overwriteClone
-      say "The file \$CLONE/$TARGET is now up to date with \$REAL."
-      exit;;
+      exit 0;;
    r) # overwrite REAL to be up to date with CLONE
       shift
       getVariables "$1" "$2" "$#"
       getTargetFiles
-      say "We are going to overwrite some file in your \$REAL directory. This may break up your system."
-      getAns "y" "n" "Are you sure you want to overwrite \$REAL/$TARGET?" "OVERWRITE"
-      [ "$OVERWRITE" != "y" ] && say "Nothing was done." && exit
       overwriteReal
-      say "The file \$REAL/$TARGET is now up to date with \$CLONE."
-      exit;;
+      exit 0;;
+   d) # print variables, debug only
+      shift
+      getVariables "$1" "$2" "$#"
+      echo "\$REAL=\"$REAL\""
+      echo "\$CLONE=\"$CLONE\""
+      exit 0;;
    \?) # invalid option
-      echo "kankyou: invalid option."
-      exit;;
+      echo "$prname: invalid option." >&2
+      exit 1;;
    esac
 done
