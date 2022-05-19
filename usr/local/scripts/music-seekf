@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ $(pgrep "mpd") ]; then
+  mpc -q seekthrough +5
+elif [ $(pgrep "clementine" | sed 1q) ]; then
+  playerctl --player=clementine position 5+
+fi

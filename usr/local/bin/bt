@@ -1,0 +1,13 @@
+#!/bin/sh
+
+HEADSET="31:27:E6:9F:1F:83"
+HEADSETSINK="bluez_sink.31_27_E6_9F_1F_83.a2dp_sink"
+bluetoothctl power on
+bluetoothctl remove "$HEADSET"
+timeout 3s bluetoothctl scan on
+#bluetoothctl scan off
+bluetoothctl pair "$HEADSET" && bluetoothctl connect "$HEADSET"
+#pacmd set-default-sink "$HEADSETSINK"
+#pactl set-card-profile "$HEADSETCARD" a2dp_sink
+sleep 3
+pactl set-default-sink "$HEADSETSINK"

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+TODOFILE="/home/sekai/Documents/Studies/physics/7-sem/todo"
+cp "$TODOFILE" "${TODOFILE}bkp"
+sed -i "s/#//" "$TODOFILE"

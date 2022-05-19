@@ -89,6 +89,7 @@ diffExisting () {
    echo "$FILES" | xargs -n 2 | grep "$TARGET" | xargs diff --color=always -- | less -R
 }
 
+# Not working for directories /usr and /etc
 showMissing () {
    TARGET=$(diff -qr "$CLONE" "$REAL" | grep "^Only in" | grep -v "$CLONE" |
       sed "s/^Only in //;

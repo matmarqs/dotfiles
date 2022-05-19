@@ -1,0 +1,3 @@
+#!/bin/sh
+
+grep -v "#" "/home/sekai/Documents/Studies/physics/7-sem/todo"
