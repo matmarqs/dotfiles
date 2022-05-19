@@ -1,0 +1,38 @@
+#!/bin/sh
+# This script must be in the same directory as the dynconf files
+
+toDark () {
+	DISPLAY=:0 feh --no-fehbg --bg-scale "$wpdark"
+	cp "$dyncfg"/gtkrc-dark "$HOME"/.config/gtk-2.0/gtkrc
+	cp "$dyncfg"/settings.ini-dark "$HOME"/.config/gtk-3.0/settings.ini
+	cp "$dyncfg"/zathurarc-dark "$HOME"/.config/zathura/zathurarc
+}
+
+toLight () {
+   DISPLAY=:0 feh --no-fehbg --bg-scale "$wplight"
+   cp "$dyncfg"/gtkrc-light "$HOME"/.config/gtk-2.0/gtkrc
+   cp "$dyncfg"/settings.ini-light "$HOME"/.config/gtk-3.0/settings.ini
+   cp "$dyncfg"/zathurarc-light "$HOME"/.config/zathura/zathurarc
+}
+
+evalMode () {
+   if [ "$hour" -gt "10" ] && [ "$hour" -lt "17" ]; then
+      toLight
+   else
+      toDark
+   fi
+}
+
+hour=$(date '+%H')
+dyncfg=$(dirname "$0")
+wplight=$(ls "$dyncfg"/wallpaper-light*)
+wpdark=$(ls "$dyncfg"/wallpaper-dark*)
+mode="$1"
+
+if [ "$mode" = "dark" ]; then
+   toDark
+elif [ "$mode" = "light" ]; then
+   toLight
+else
+   evalMode
+fi

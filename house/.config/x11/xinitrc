@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# merging Xresources
+xrdb "$HOME/.config/x11/Xresources"
+
+# keyboard rate
+xset r rate 300 60
+
+# clipboard
+parcellite -n &
+clipmenud &
+
+# transparency, wallpaper and themes
+xcompmgr &
+$HOME/.config/dynconf/aesthetics
+
+# input method for japanese
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export SDL_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+fcitx -dr &
+
+# audio
+#pipewire &
+
+# initialize gui
+dunst &
+dwmblocks &
+exec dbus-launch --sh-syntax --exit-with-session dwm

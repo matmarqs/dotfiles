@@ -1,11 +1,9 @@
 improve kankyou
-dwm, dwmblocks and st moved to .config instead of .local
-needs to fix this change in config.sh
-change ccls to clangd (package clang-tools-extra)
 
-ban pulseaudio, now I use pipewire
-have to make some symlinks to configure ALSA with PipeWire.
-https://docs.voidlinux.org/config/media/pipewire.html
+Voltei pro pulseaudio, isso por causa do bluetooth
+RELEVANTE: https://www.reddit.com/r/archlinux/comments/9o7opd/problem_with_ad2p_sink/e7wddsx/
+
+Adicionar o /etc/bluetooth/main.conf
 
 touch down instead of removing the service, according to https://docs.voidlinux.org/config/services/index.html#enabling-services
 this makes disabling persistent across update of the runit-void package
@@ -13,7 +11,6 @@ this makes disabling persistent across update of the runit-void package
 keymap changed, I was able to swap Alt and Win in console (tty)
 
 blacklist uvcvideo for disabling Webcam by default
-
 
 new setup dwm-patches:
 
