@@ -1,0 +1,10 @@
+# how to fix ugly fonts in browser (firefox) on Void
+# 1. install cantarell, configure firefox to use it
+
+sudo xbps-install -S cantarell-fonts
+
+# 2. enable no-bitmaps fonts
+# (https://docs.voidlinux.org/config/graphical-session/fonts.html)
+
+sudo ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+sudo xbps-reconfigure -f fontconfig

@@ -1,0 +1,31 @@
+#
+# This file is parsed by pam_env module
+#
+# Syntax: simple "KEY=VAL" pairs on separate lines
+#
+
+# Variaveis para temas do Qt
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+#
+# Configurando fcitx no Void
+#
+
+#Baixar o fcitx com o Mozc.
+#Depois disso baixar os IM modules.
+#Eles vem separados, existe pacote para gtk2, gtk3 e qt5.
+#Eles sao todos da forma libfcitx-qt5, libfcitx-gtk.
+#
+#Então, setar as variaveis no arquivo /etc/environment (realmente precisa ser este arquivo no Void), se não no QT não funciona.
+#
+#export GTK_IM_MODULE=fcitx
+#export QT_IM_MODULE=fcitx
+#export SDL_IM_MODULE=fcitx
+#export XMODIFIERS=@im=fcitx
+#
+#Colocar:
+#fcitx -dr &
+#
+#na .xinitrc.
+#
+#Aí começou a dar certo no Void.

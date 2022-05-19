@@ -1,0 +1,6 @@
+[Settings]
+gtk-cursor-theme-name = Breeze_Snow
+gtk-icon-theme-name = BeautyLine
+gtk-theme-name = Midnight-BlueNight
+gtk-font-name = Cantarell 10
+gtk-application-prefer-dark-theme = true

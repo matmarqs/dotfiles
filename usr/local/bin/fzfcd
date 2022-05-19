@@ -1,9 +1,0 @@
-#!/bin/sh
-
-TARGET="$(find $HOME -name "*$1*" 2>/dev/null | fzf)"
-
-if [ -d "$TARGET" ]; then
-    cd "$TARGET"
-elif [ -f "$TARGET" ]; then
-    cd "$(dirname "$TARGET")"
-fi

@@ -1,0 +1,16 @@
+set folder = "imaps://user@gmail.com@imap.gmail.com:993"
+set imap_pass = "password"
+set smtp_url = "smtps://user@gmail.com@smtp.gmail.com:587"
+set smtp_pass = "password"
+
+set from = "user@gmail.com"
+set realname = "Your Name"
+
+set spoolfile = "+Inbox"
+set record = "+Sent"
+set trash = "+Trash"
+set postponed = "+Drafts"
+
+mailboxes =INBOX =Sent =Trash =Drafts
+
+source ~/.config/mutt/color.muttrc

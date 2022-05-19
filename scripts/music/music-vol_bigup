@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ $(pgrep "mpd") ]; then
+  mpc -q volume +15
+elif [ $(pgrep "clementine" | sed 1q) ]; then
+  playerctl --player=clementine volume 0.15+
+elif [ $(pgrep "spotify" | sed 1q) ]; then
+  /home/sekai/scripts/music/spotify-vol_bigup.py
+fi

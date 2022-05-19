@@ -1,0 +1,25 @@
+#!/bin/sh
+
+bat="$(acpi | awk -F', ' '{print $2}' | awk -F'%' '{print $1}')"
+status="$(acpi | awk -F',' '{print $1}' | awk '{print $3}')"
+
+if [ "$status" = "Charging" ]
+then
+  icon=" "
+elif [ "$bat" -gt "85" ]
+then
+  icon=" "
+elif [ "$bat" -gt "65" ]
+then
+  icon=" "
+elif [ "$bat" -gt "35" ]
+then
+  icon=" "
+elif [ "$bat" -gt "10" ]
+then
+  icon=" "
+else
+  icon=" "
+fi
+
+echo "$icon$bat"

@@ -1,5 +1,0 @@
-
-## Giving permissions of some commands to the user
-Cmnd_Alias SHUTDOWN_CMDS = /bin/poweroff, /bin/reboot, /bin/zzz
-Cmnd_Alias NET_CMDS = /usr/local/bin/netrestart
-sekai ALL = NOPASSWD: SHUTDOWN_CMDS, NET_CMDS
