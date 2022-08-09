@@ -96,6 +96,7 @@ createFolders () {
    mkdir -p "$HOME"/.local/share/mpd/playlists "$HOME"/.local/share/lyrics
    mkdir -p "$HOME"/.config/git && touch "$HOME"/.config/git/config
    mkdir -p "$HOME"/.config/android
+   mkdir -p "$HOME"/.config/wget && touch "$HOME"/.config/wget/wgetrc
 }
 
 deleteTrash () {
