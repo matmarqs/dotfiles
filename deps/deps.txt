@@ -40,6 +40,9 @@ xset
 xsetroot
 alsa-utils
 alsa-plugins
+pulseaudio
+alsa-plugins-pulseaudio
+apulse
 pulseaudio-utils
 mpc
 pavucontrol

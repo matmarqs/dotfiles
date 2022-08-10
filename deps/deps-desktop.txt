@@ -20,3 +20,6 @@ python3-numpy
 python3-scipy
 python3-PyQt5-svg
 qutebrowser
+python3-dbus
+texlive-most
+texlive-latexmk
