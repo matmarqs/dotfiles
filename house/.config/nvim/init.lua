@@ -30,6 +30,7 @@ vim.api.nvim_command('set timeoutlen=2000 ttimeoutlen=10 history=200')
 vim.api.nvim_command('map Q :w!<CR>')
 vim.api.nvim_command('map <C-z> <C-a>')
 vim.api.nvim_command('set guicursor=')
+vim.api.nvim_command('vnoremap S :s/\\%V/&/g<Left><Left><Left><Left>')
 
 -- Languages
 vim.api.nvim_command('set showcmd')

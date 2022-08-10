@@ -9,8 +9,11 @@ map k gk
 map $ g$
 
 " normal mode
+"nnoremap <Leader>c :w<CR>:!pdflatex<Space>-shell-escape<Space>%<CR><CR>
+"nnoremap <LocalLeader>c :w<CR>:!pdflatex<Space>%<CR><CR>:!latexmk<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>
 nnoremap <Leader>c :w<CR>:!lualatex<Space>-shell-escape<Space>%<CR><CR>
-nnoremap <LocalLeader>c :w<CR>:!lualatex<Space>%<CR><CR>:!latexmk<Space>%<CR><CR>:!xelatex<Space>%<CR><CR>:!xelatex<Space>%<CR><CR>
+"nnoremap <LocalLeader>c :w<CR>:!pdflatex<Space>%<CR><CR>:!latexmk<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>
+nnoremap <LocalLeader>c :w<CR>:!lualatex<Space>%<CR><CR>:!latexmk<Space>%<CR><CR>:!lualatex<Space>%<CR><CR>:!lualatex<Space>%<CR><CR>
 nnoremap <Leader>o :!zathura --fork %:t:r.pdf<CR><CR>
 
 " insert mode
@@ -36,6 +39,7 @@ inoremap <Leader>pr \begin{proof}<CR>\rm<Space><CR>\end{proof}<CR><CR><++><Esc>3
 inoremap <Leader>O \begin{obs}<CR>\rm<Space><CR>\end{obs}<CR><CR><++><Esc>3ka
 inoremap <Leader>S \section{}<CR><CR><++><Esc>2kf{a
 "inoremap <Leader>l \begin{lstlisting}<CR><Tab><CR>\end{lstlisting}<CR><CR><++><Esc>3ka
-inoremap <Leader>m21 \begin{bmatrix}<CR><Space>\\<Space><++><CR>\end{bmatrix}<CR><++><Esc>2k00i
-inoremap <Leader>m22 \begin{bmatrix}<CR> & <++> \\<CR><++> & <++><CR>\end{bmatrix}<CR><++><Esc>3k00i
+inoremap <Leader>m21 \begin{pmatrix}<CR><Space>\\<Space><++><CR>\end{pmatrix}<Esc><<A<CR><++><Esc>2k00i
+inoremap <Leader>m22 \begin{pmatrix}<CR>& <++> \\<CR><++> & <++><CR>\end{pmatrix}<Esc><<A<CR><++><Esc>3k00i<Space><Esc>i
+inoremap <Leader>m33 \begin{pmatrix}<CR>& <++> & <++> \\<CR><++> & <++> & <++> \\<CR><++> & <++> & <++> \\<CR>\end{pmatrix}<Esc><<A<CR><++><Esc>4k00i<Space><Esc>i
 inoremap <Leader>F \begin{frame}<CR><CR>\end{frame}<CR><++><Esc>2ki

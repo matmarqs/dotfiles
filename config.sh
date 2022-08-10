@@ -67,12 +67,12 @@ configCron () {
 
 configThemes () {
    mkdir -p "$HOME/.config/gtk-2.0" "$HOME/.config/gtk-3.0"
-   sudo tar -xzf "$HOME"/.local/appearance/BeautyLine/BeautyLine.tar.gz -C /usr/share/icons
-   sudo tar -xzf "$HOME"/.local/appearance/Midnight/Midnight-BlueNight.tar.gz -C /usr/share/themes
-   sudo tar -xzf "$HOME"/.local/appearance/Midnight/Midnight-GreenNight.tar.gz -C /usr/share/themes
-   sudo tar -xf "$HOME"/.local/appearance/Sweet-Ambar-Blue/Sweet-Ambar-Blue.tar.xz -C /usr/share/themes
-   sudo tar -xf "$HOME"/.local/appearance/Matcha-sea/Matcha-sea.tar.xz -C /usr/share/themes
-   sudo unzip -qq "$HOME"/.local/appearance/mononoki/mononoki.zip -d /usr/share/fonts
+   sudo tar -xzf "$HOME"/.config/appearance/BeautyLine/BeautyLine.tar.gz -C /usr/share/icons
+   sudo tar -xzf "$HOME"/.config/appearance/Midnight/Midnight-BlueNight.tar.gz -C /usr/share/themes
+   sudo tar -xzf "$HOME"/.config/appearance/Midnight/Midnight-GreenNight.tar.gz -C /usr/share/themes
+   sudo tar -xf "$HOME"/.config/appearance/Sweet-Ambar-Blue/Sweet-Ambar-Blue.tar.xz -C /usr/share/themes
+   sudo tar -xf "$HOME"/.config/appearance/Matcha-sea/Matcha-sea.tar.xz -C /usr/share/themes
+   sudo unzip -qq "$HOME"/.config/appearance/mononoki/mononoki.zip -d /usr/share/fonts
    sudo mkdir -p /usr/share/icons/default
    printf "[icon theme]\nInherits=Breeze_Hacked\n" | sudo tee /usr/share/icons/default/index.theme
 }
