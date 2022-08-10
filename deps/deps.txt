@@ -81,3 +81,4 @@ breeze-hacked-cursor-theme
 breeze-icons
 qt5ct
 firefox
+
