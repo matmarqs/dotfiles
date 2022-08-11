@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sudo cat "$SOMEFILE" | grep Token | awk '{print $2}' | xclip -i -selection clipboard
