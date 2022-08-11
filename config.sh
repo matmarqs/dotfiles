@@ -148,16 +148,16 @@ getAns "d" "v" "Do you plan to use this system as desktop (d) or virtual machine
 THEUSER=$(whoami)
 DOTDIR=$(dirname "$(realpath "$0")")   # directory where the script and files are
 if [ "$USAGE" = "d" ]; then
-   MYDEPS=$(cat "$DOTDIR"/deps/deps.txt "$DOTDIR"/desktop/deps/deps-desktop.txt)
+   MYDEPS=$(cat "$DOTDIR"/deps/deps.txt "$DOTDIR"/deps/deps-desktop.txt)
 else
-   MYDEPS=$(cat "$DOTDIR"/deps/deps.txt "$DOTDIR"/virtual/deps/deps-virtual.txt)
+   MYDEPS=$(cat "$DOTDIR"/deps/deps.txt "$DOTDIR"/deps/deps-virtual.txt)
 fi
 
 say "Changing to the best repository I know, upgrading and adding non-free repository."
 updateVoid ; echo
 
 say "Installing dependencies with xbps."
-sudo xbps-install -Sy "$MYDEPS" ; echo
+echo "$MYDEPS" | xargs sudo xbps-install -Sy ; echo
 
 # manual dependencies check
 getAns "y" "n" "The dependencies were installed successfully? Continue?" "DEPSOK"
