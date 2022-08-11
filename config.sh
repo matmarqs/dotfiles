@@ -71,6 +71,7 @@ configThemes () {
    sudo tar -xzf "$HOME"/.config/appearance/Midnight/Midnight-BlueNight.tar.gz -C /usr/share/themes
    sudo tar -xzf "$HOME"/.config/appearance/Midnight/Midnight-GreenNight.tar.gz -C /usr/share/themes
    sudo tar -xf "$HOME"/.config/appearance/Sweet-Ambar-Blue/Sweet-Ambar-Blue.tar.xz -C /usr/share/themes
+   sudo tar -xf "$HOME"/.config/appearance/Sweet-Dark/Sweet-Dark.tar.xz -C /usr/share/themes
    sudo tar -xf "$HOME"/.config/appearance/Matcha-sea/Matcha-sea.tar.xz -C /usr/share/themes
    sudo unzip -qq "$HOME"/.config/appearance/mononoki/mononoki.zip -d /usr/share/fonts
    sudo mkdir -p /usr/share/icons/default
