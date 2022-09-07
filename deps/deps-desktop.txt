@@ -21,3 +21,4 @@ python3-scipy
 python3-PyQt5-svg
 qutebrowser
 python3-dbus
+shellcheck
