@@ -63,9 +63,10 @@ autocmd BufWritePre * :%s/\s\+$//e
 " sourcing configs
 autocmd FileType sh source $HOME/.vim/sh.vim
 autocmd BufRead,BufNewfile *.c,*.h source $HOME/.vim/c.vim
-autocmd BufRead,BufNewFile *.py    source $HOME/.vim/python.vim
-autocmd BufRead,BufNewFile *.lua   source $HOME/.vim/lua.vim
-autocmd BufRead,BufNewFile *.tex   source $HOME/.vim/tex.vim
-autocmd BufRead,BufNewFile *.md    source $HOME/.vim/md.vim
-autocmd BufRead,BufNewFile *.rmd   source $HOME/.vim/rmd.vim
+autocmd BufRead,BufNewfile *.cpp,*.hpp source $HOME/.vim/cpp.vim
+autocmd BufRead,BufNewFile *.py source $HOME/.vim/python.vim
+autocmd BufRead,BufNewFile *.lua source $HOME/.vim/lua.vim
+autocmd BufRead,BufNewFile *.tex source $HOME/.vim/tex.vim
+autocmd BufRead,BufNewFile *.md source $HOME/.vim/md.vim
+autocmd BufRead,BufNewFile *.rmd source $HOME/.vim/rmd.vim
 " "

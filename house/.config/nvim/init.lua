@@ -29,7 +29,7 @@ vim.api.nvim_command('set tabstop=4 softtabstop=4 shiftwidth=4 backspace=indent,
 vim.api.nvim_command('set timeoutlen=2000 ttimeoutlen=10 history=200')
 vim.api.nvim_command('map Q :w!<CR>')
 vim.api.nvim_command('map <C-z> <C-a>')
-vim.api.nvim_command('set guicursor=')
+--vim.api.nvim_command('set guicursor=')
 vim.api.nvim_command('vnoremap S :s/\\%V/&/g<Left><Left><Left><Left>')
 
 -- Languages
@@ -73,6 +73,7 @@ vim.api.nvim_command('autocmd BufWritePre * :%s/\\s\\+$//e')
 
 -- importing language configs
 vim.api.nvim_command('autocmd BufRead,BufNewfile *.c,*.h source /home/sekai/.vim/c.vim')
+vim.api.nvim_command('autocmd BufRead,BufNewfile *.cpp,*.hpp source /home/sekai/.vim/cpp.vim')
 vim.api.nvim_command('autocmd BufRead,BufNewFile *.py source /home/sekai/.vim/python-neo.vim')
 vim.api.nvim_command('autocmd BufRead,BufNewFile *.lua source /home/sekai/.vim/lua.vim')
 vim.api.nvim_command('autocmd BufRead,BufNewFile *.tex source /home/sekai/.vim/tex.vim')
@@ -118,8 +119,8 @@ cmp.setup {
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+    --elseif luasnip.expand_or_jumpable() then
+    --  luasnip.expand_or_jump()
       else
         fallback()
       end

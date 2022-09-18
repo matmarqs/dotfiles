@@ -39,7 +39,7 @@ bind -m vi-insert "\C-l":clear-screen
 source "$HOME/.config/shell/aliasrc"
 
 ## some functions to make life easier
-# compiles a basic C program and runs it
+# compiles a basic C program
 c () {
    PROGDIR="$(dirname "$1")"
    gcc -g -Wall -O2 "$1" -lm -o "$PROGDIR"/a.out #&& "$PROGDIR"/a.out
@@ -48,6 +48,11 @@ c () {
 cgsl () {
    PROGDIR="$(dirname "$1")"
 	gcc -std=gnu99 -g -Wall -O2 "$1" -lgsl -lgslcblas -lm -o "$PROGDIR"/a.out
+}
+# compiles a basic C++ program
+cpp () {
+   PROGDIR="$(dirname "$1")"
+   g++ -g -Wall -O2 "$1" -o "$PROGDIR"/a.out #&& "$PROGDIR"/a.out
 }
 # for music: check if mpd is running, if not it starts it. Then it opens ncmpcpp
 music () {

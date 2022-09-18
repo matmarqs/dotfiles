@@ -17,6 +17,7 @@ toLight () {
 
 evalMode () {
    if [ "$hour" -gt "10" ] && [ "$hour" -lt "16" ]; then
+   #if [ "$hour" -gt "8" ] && [ "$hour" -lt "21" ]; then
       toLight
    else
       toDark
