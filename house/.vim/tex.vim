@@ -19,6 +19,7 @@ nnoremap <Leader>o :!zathura --fork %:t:r.pdf<CR><CR>
 " insert mode
 inoremap <Leader>e $$<++><Esc>F$i
 inoremap <Leader>E $$<CR><CR>$$<CR><++><Esc>2ki
+inoremap <Leader>Q \begin{equation} \label{eq:}<CR><CR>\end{equation}<Esc>ki<++><Esc>k$i
 inoremap <Leader>c \begin{cases}<CR><CR>\end{cases}<CR><++><Esc>2ki
 inoremap <Leader>dv \dv{}{<++>}<Esc>Fvla
 inoremap <Leader>dp \pdv{}{<++>}<Esc>Fvla
