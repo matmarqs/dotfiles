@@ -1,7 +1,7 @@
 ## zathura bookmarks are stored in $HOME/.local/share/zathura/bookmarks
 
 # disable statusbar by default
-set guioptions none
+set guioptions "h"
 
 # statusbar font
 set font "Source Code Pro 10"

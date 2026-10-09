@@ -1,3 +1,5 @@
+set nowrap
+
 set viminfo=%,<800,'10,/50,:100,h,f0,n~/.vim/cache/.viminfo
 "           | |    |   |   |    | |  + viminfo file path
 "           | |    |   |   |    | + file marks 0-9,A-Z 0=NOT stored
@@ -22,7 +24,7 @@ set softtabstop=4                 " backspace will take you to tabstops
 set shiftwidth=4                  " for just Ctrl+d (<<) and Ctrl+t (>>)
 set backspace=indent,eol,start    " more powerful backspaces
 set expandtab                     " convert tabs to spaces
-"set autoindent                    " autoindent on tabs (not code specific)
+set autoindent                    " autoindent on tabs (not code specific)
 " to replace all tabs with 4 spaces in a file run ':%s/\t/    /g'
 set timeoutlen=2000
 set ttimeoutlen=10
@@ -37,7 +39,7 @@ filetype plugin on
 syntax on
 
 " colors
-hi Visual cterm=reverse ctermbg=234
+"hi Visual cterm=reverse ctermbg=234
 hi Statement ctermfg=117
 hi LineNr ctermfg=216
 hi Pmenu ctermbg=025 ctermfg=016
@@ -49,7 +51,7 @@ hi PmenuSel ctermbg=111 ctermfg=016
 " macros. '!' means to toggle
 nnoremap <Leader>n :set rnu!<CR>
 nnoremap <Leader>d 0D
-nnoremap <Leader><Leader> i<Esc>/<++><CR>"_c4l
+nnoremap <Leader><Leader> /<++><CR>"_c4l
 inoremap <Leader><Leader> <Esc>/<++><CR>"_c4l
 nnoremap <CR> o<Esc>0d$
 " "
@@ -62,11 +64,37 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 " sourcing configs
 autocmd FileType sh source $HOME/.vim/sh.vim
-autocmd BufRead,BufNewfile *.c,*.h source $HOME/.vim/c.vim
-autocmd BufRead,BufNewfile *.cpp,*.hpp source $HOME/.vim/cpp.vim
-autocmd BufRead,BufNewFile *.py source $HOME/.vim/python.vim
-autocmd BufRead,BufNewFile *.lua source $HOME/.vim/lua.vim
+autocmd FileType c source $HOME/.vim/c.vim
+autocmd FileType cpp source $HOME/.vim/cpp.vim
+autocmd FileType py source $HOME/.vim/python.vim
+autocmd FileType lua source $HOME/.vim/lua.vim
+"autocmd BufRead,BufNewfile *.c,*.h source $HOME/.vim/c.vim
 autocmd BufRead,BufNewFile *.tex source $HOME/.vim/tex.vim
 autocmd BufRead,BufNewFile *.md source $HOME/.vim/md.vim
 autocmd BufRead,BufNewFile *.rmd source $HOME/.vim/rmd.vim
+autocmd BufRead,BufNewFile *.html source $HOME/.vim/html.vim
+autocmd BufRead,BufNewFile *.s set filetype=mips
 " "
+
+
+" new settings, reading the manual
+set hlsearch
+set number relativenumber
+set ruler
+set ignorecase
+
+set conceallevel=0
+hi link HelpBar Normal
+hi link HelpStar Normal
+
+packadd! hlyank
+packadd! nohlsearch
+
+set laststatus=0
+set fillchars=vert:\
+hi! VertSplit guifg=black guibg=black ctermfg=black ctermbg=black
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l

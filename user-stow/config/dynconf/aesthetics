@@ -1,39 +1,64 @@
 #!/bin/sh
-# This script must be in the same directory as the dynconf files
 
-toDark () {
-	DISPLAY=:0 feh --no-fehbg --bg-scale "$wpdark"
-	cp "$dyncfg"/gtkrc-dark "$HOME"/.config/gtk-2.0/gtkrc
-	cp "$dyncfg"/settings.ini-dark "$HOME"/.config/gtk-3.0/settings.ini
-	cp "$dyncfg"/zathurarc-dark "$HOME"/.config/zathura/zathurarc
+# Get script directory (more reliable method)
+dyncfg="$(dirname "$0")"
+
+# Config file paths
+gtk2_rc="$HOME/.config/gtk-2.0/gtkrc"
+gtk3_settings="$HOME/.config/gtk-3.0/settings.ini"
+zathura_config="$HOME/.config/zathura/zathurarc"
+wplight="$HOME/Pictures/wallpapers/black-wallpaper.png"
+wpdark="$HOME/Pictures/wallpapers/black-wallpaper.png"
+
+toDark() {
+    if [ -f "$wpdark" ]; then
+        DISPLAY=:0 feh --no-fehbg --bg-scale "$wpdark" &
+    fi
+
+    # Theme changes
+    [ -f "$dyncfg/gtkrc-dark" ] && cp "$dyncfg/gtkrc-dark" "$gtk2_rc"
+    [ -f "$dyncfg/settings.ini-dark" ] && cp "$dyncfg/settings.ini-dark" "$gtk3_settings"
+    [ -f "$dyncfg/zathurarc-dark" ] && cp "$dyncfg/zathurarc-dark" "$zathura_config"
+    gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 }
 
-toLight () {
-   DISPLAY=:0 feh --no-fehbg --bg-scale "$wplight"
-   cp "$dyncfg"/gtkrc-light "$HOME"/.config/gtk-2.0/gtkrc
-   cp "$dyncfg"/settings.ini-light "$HOME"/.config/gtk-3.0/settings.ini
-   cp "$dyncfg"/zathurarc-light "$HOME"/.config/zathura/zathurarc
+toLight() {
+    if [ -f "$wplight" ]; then
+        DISPLAY=:0 feh --no-fehbg --bg-scale "$wplight" &
+    fi
+
+    # Theme changes
+    [ -f "$dyncfg/gtkrc-light" ] && cp "$dyncfg/gtkrc-light" "$gtk2_rc"
+    [ -f "$dyncfg/settings.ini-light" ] && cp "$dyncfg/settings.ini-light" "$gtk3_settings"
+    [ -f "$dyncfg/zathurarc-light" ] && cp "$dyncfg/zathurarc-light" "$zathura_config"
+    gsettings set org.gnome.desktop.interface color-scheme prefer-light
 }
 
-evalMode () {
-   if [ "$hour" -gt "10" ] && [ "$hour" -lt "16" ]; then
-   #if [ "$hour" -gt "8" ] && [ "$hour" -lt "21" ]; then
-      toLight
-   else
-      toDark
-   fi
+changeBasedOnTime() {
+    hour=$(date '+%H')
+    if [ "$hour" -gt 7 ] && [ "$hour" -lt 18 ]; then
+        toLight
+    else
+        toDark
+    fi
 }
 
-hour=$(date '+%H')
-dyncfg=$(dirname "$0")
-wplight=$(ls "$dyncfg"/wallpaper-light*)
-wpdark=$(ls "$dyncfg"/wallpaper-dark*)
-mode="$1"
+toggle() {
+    # More reliable dark mode detection
+    if [ -f "$gtk3_settings" ]; then
+        darkmode=$(grep -m1 'gtk-application-prefer-dark-theme' "$gtk3_settings" | cut -d'=' -f2 | tr -d '[:space:]')
+        if [ "$darkmode" = "false" ]; then
+            toDark
+        else
+            toLight
+        fi
+    else
+        toDark  # Default to dark if settings file doesn't exist
+    fi
+}
 
-if [ "$mode" = "dark" ]; then
-   toDark
-elif [ "$mode" = "light" ]; then
-   toLight
-else
-   evalMode
-fi
+# Main execution
+case "$1" in
+    "guess") changeBasedOnTime ;;
+    *) toggle ;;
+esac

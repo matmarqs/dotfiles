@@ -23,9 +23,9 @@ alias \
     py="python" \
     v="vim" \
     vi="vim" \
-    nvi="nvim" \
-    nv="nvim" \
-    rg="ranger" \
+    nvi="vim" \
+    vim="vim" \
+    r="ranger" \
     tmux="tmux -2" \
     m="make" \
     mc="make clean" \
@@ -42,6 +42,7 @@ alias \
     ren="perl-rename" \
     xsel="xsel --logfile \$HOME/.cache/xsel.log" \
     clip="xclip -i -selection clipboard" \
+    pclip="xclip -o -selection clipboard" \
     aest="\$HOME/.config/dynconf/aesthetics" \
     h="htop" \
     ka="killall" \
