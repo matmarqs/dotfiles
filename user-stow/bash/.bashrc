@@ -47,20 +47,7 @@ c () {
    PROGDIR="$(dirname "$1")"
    gcc -g -Wall -O0 "$1" -lm -o "$PROGDIR"/a.out #&& "$PROGDIR"/a.out
 }
-crun () {
-   PROGDIR="$(dirname "$1")"
-   gcc -g -Wall -O0 "$1" -lm -o "$PROGDIR"/a.out && "$PROGDIR"/a.out
-}
-# compiles a C math program that uses the GSL library
-cgsl () {
-   PROGDIR="$(dirname "$1")"
-	gcc -std=gnu99 -g -Wall -O2 "$1" -lgsl -lgslcblas -lm -o "$PROGDIR"/a.out
-}
-# compiles a basic C++ program
-cpp () {
-   PROGDIR="$(dirname "$1")"
-   g++ -g -Wall -O2 "$1" -o "$PROGDIR"/a.out #&& "$PROGDIR"/a.out
-}
+
 # for music: check if mpd is running, if not it starts it. Then it opens ncmpcpp
 music () {
     pgrep mpd &> /dev/null || mpd ; ncmpcpp -q
