@@ -6,10 +6,7 @@ if [ "$(id -u)" -eq 0 ]; then
     exit 1
 fi
 
-stow -R -v -d user-stow -t ~ bash
-stow -R -v -d user-stow -t ~/.config config
-stow -R -v -d user-stow -t ~/.local/bin local-bin
-stow -R -v -d user-stow -t ~/.vim vim
+stow -R -v -d user-stow -t ~ bash config local vim
 
 sudo stow -R -v -d system-stow -t /usr/local usr-local
 sudo stow -R -v -d system-stow -t /root root
