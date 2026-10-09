@@ -30,11 +30,11 @@ BMAGENTA='\[\e[1;35m\]'
 BCYAN='\[\e[1;36m\]'
 #BGCYAN='\[\e[1;36m\]'
 WHITE='\[\e[0;37m\]'
-#BWHITE='\[\e[1;37m\]'
+BWHITE='\[\e[1;37m\]'
 #BGWHITE='\[\e[1;37m\]'
 
 # prompt
-PS1="${BCYAN}[${BRED}\u${BGREEN}@${BBLUE}\h ${BMAGENTA}\W${BCYAN}]${GREEN}\$ ${WHITE}"
+PS1="${BWHITE}[${BGREEN}\u${BBLUE}@${BWHITE}\h ${BMAGENTA}\W${BWHITE}]${GREEN}\$ ${WHITE}"
 
 # color for commands
 alias ls='ls --color=auto'
@@ -47,15 +47,16 @@ alias diff='diff --color=auto'
 alias ip='ip --color=auto'
 
 # vi mode
-set -o vi
-bind -m vi-insert "\C-l":clear-screen
+#set -o vi
+#bind -m vi-insert "\C-l":clear-screen
+set -o emacs
 
 # aliases
 alias py="python"
 alias v="vim"
 alias vi="vim"
 alias nv="nvim"
-alias rg="ranger"
+alias r="ranger"
 alias tmux="tmux -2"
 alias off="sudo poweroff"
 alias rbt="sudo reboot"
@@ -69,3 +70,7 @@ alias xbq="xbps-query"
 alias xbr="sudo xbps-remove"
 alias pg="ps aux | grep"
 alias zzz="sudo zzz"
+
+github () {
+   git add . && git commit -m "$1" && git push
+}

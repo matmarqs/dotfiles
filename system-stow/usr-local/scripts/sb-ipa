@@ -1,0 +1,4 @@
+#!/bin/sh
+interface="wlo1"
+ip_addr="$(ip -brief address | grep "$interface" | awk '{print $3}')"
+echo "$ip_addr"

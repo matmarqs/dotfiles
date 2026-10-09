@@ -1,0 +1,12 @@
+#!/bin/sh
+
+bat="$(acpi | awk -F', ' '{print $2}' | awk -F'%' '{print $1}')"
+status="$(acpi | awk -F',' '{print $1}' | awk '{print $3}')"
+
+if [ "$bat" -lt 15 ] && [ "$status" = "Discharging" ]
+then
+  DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send -u critical "BATERIA ACABANDO!"
+elif [ "$bat" -lt 30 ] && [ "$status" = "Discharging" ]
+then
+  DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send "Bateria baixa!"
+fi
