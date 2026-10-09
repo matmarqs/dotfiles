@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Function to display usage information
+usage() {
+    echo "Usage: $0 [-l LENGTH] [-t TYPE]"
+    echo "  -l LENGTH  Length of the password (default: 16)"
+    echo "  -t TYPE    Type of characters to include:"
+    echo "             1 - Only numbers (0-9)"
+    echo "             2 - Only letters (a-zA-Z)"
+    echo "             3 - Letters and numbers (a-zA-Z0-9)"
+    echo "             4 - Letters, numbers and basic symbols (a-zA-Z0-9!@_-)"
+    echo "             5 - OWASP special characters (all printable ASCII special chars)"
+    echo "             (default: 5)"
+    exit 1
+}
+
+# Default values
+LENGTH=16
+TYPE=5
+
+# Parse command line options
+while getopts ":l:t:" opt; do
+    case $opt in
+        l)
+            if [[ $OPTARG =~ ^[0-9]+$ ]] && [ $OPTARG -gt 0 ]; then
+                LENGTH=$OPTARG
+            else
+                echo "Error: Length must be a positive integer."
+                usage
+            fi
+            ;;
+        t)
+            if [[ $OPTARG =~ ^[1-5]$ ]]; then
+                TYPE=$OPTARG
+            else
+                echo "Error: Type must be between 1 and 5."
+                usage
+            fi
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG"
+            usage
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument."
+            usage
+            ;;
+    esac
+done
+
+# Generate password based on selected type
+case $TYPE in
+    1)
+        # Only numbers 0-9
+        PASSWORD=$(tr -dc '0-9' </dev/urandom | head -c "$LENGTH")
+        ;;
+    2)
+        # Only letters a-zA-Z
+        PASSWORD=$(tr -dc 'A-Za-z' </dev/urandom | head -c "$LENGTH")
+        ;;
+    3)
+        # Letters and numbers a-zA-Z0-9
+        PASSWORD=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c "$LENGTH")
+        ;;
+    4)
+        # Letters, numbers and basic symbols a-zA-Z0-9!@_-
+        PASSWORD=$(tr -dc 'A-Za-z0-9!@_-' </dev/urandom | head -c "$LENGTH")
+        ;;
+    5)
+        # OWASP special characters
+        PASSWORD=$(tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c "$LENGTH")
+        ;;
+    *)
+        usage
+        ;;
+esac
+
+# Print the generated password
+echo "$PASSWORD"

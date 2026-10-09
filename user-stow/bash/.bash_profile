@@ -33,7 +33,7 @@ export RANGER_LOAD_DEFAULT_RC="FALSE"   # ranger config file
 export _JAVA_AWT_WM_NONREPARENTING=1    # fix for Java applications in dwm
 export CM_SELECTIONS="clipboard"        # clipmenu: clipboard manager based on dmenu.
 export CM_OUTPUT_CLIP=0     # docs: clipmenud -h, clipmenu -h, clipctl -h.
-export CM_MAX_CLIPS=64
+export CM_MAX_CLIPS=0   # 0 for infinity
 
 # default programs
 export TERMINAL="st"
@@ -42,4 +42,16 @@ export EDITOR="vim"
 export BROWSER="firefox"
 
 # startx our xinitrc
-alias startx="startx $XINITRC"
+alias startx='startx "$XINITRC"'
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+# rbenv
+export RBENV_ROOT="$HOME/.rbenv"
+[[ -d $RBENV_ROOT/bin ]] && export PATH="$RBENV_ROOT/bin:$PATH"
+eval "$(rbenv init - bash)"
+
+export PATH="$HOME/tools/cross/bin:$HOME/tools/john/run:$PATH"
