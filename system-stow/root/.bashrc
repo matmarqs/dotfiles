@@ -71,6 +71,8 @@ alias xbr="sudo xbps-remove"
 alias pg="ps aux | grep"
 alias zzz="sudo zzz"
 
+export EDITOR="vim"
+
 github () {
    git add . && git commit -m "$1" && git push
 }
