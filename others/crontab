@@ -1,5 +1,2 @@
-# change light/dark theme
-15 16 * * * $HOME/.config/dynconf/aesthetics
-15 10 * * * $HOME/.config/dynconf/aesthetics
-# low battery notification
+# low battery notification.
 */10 * * * * /usr/local/scripts/lowbat
