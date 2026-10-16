@@ -94,8 +94,7 @@ activate_venv() {
 alias pyv="activate_venv"
 
 alias john="/home/sekai/tools/john/run/john"
-export WINEPREFIX="/home/sekai/Desktop/winedev/wine/mydevprefix"
-export PATH="/home/sekai/Desktop/winedev/wine/tools/wine:$PATH"
+. ~/.bash_env
 
 alias fd="fd --hidden"
 
