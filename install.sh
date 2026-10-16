@@ -41,10 +41,10 @@ getAns () {
 # Example:
 #   stowPackages --adopt
 stowPackages () {
-   stow -R -v -d user-stow -t ~ bash config local vim "$@"
-   sudo stow -R -v -d system-stow -t /usr/local usr-local "$@"
-   sudo stow -R -v -d system-stow -t /root root "$@"
-   sudo stow -R -v -d system-stow -t /etc etc "$@"
+   stow -R -d user-stow -t ~ bash config local vim "$@"
+   sudo stow -R -d system-stow -t /usr/local usr-local "$@"
+   sudo stow -R -d system-stow -t /root root "$@"
+   sudo stow -R -d system-stow -t /etc etc "$@"
 }
 
 # The main function will pass additional flags to the stowPackages function.
