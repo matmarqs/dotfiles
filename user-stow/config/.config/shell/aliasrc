@@ -46,4 +46,7 @@ alias \
     aest="\$HOME/.config/dynconf/aesthetics" \
     h="htop" \
     ka="killall" \
+    ta="tmux a -t " \
+    tn="tmux new -s " \
+    tl="tmux ls" \
     p="ping -c 3 google.com"
