@@ -47,6 +47,17 @@ stowPackages () {
    sudo stow -R -d system-stow -t /etc etc "$@"
 }
 
+configSudoers() {
+   if sudo grep 'SHUTDOWN_CMDS' /etc/sudoers >/dev/null; then
+      echo 'Sudoers already configured'
+      return 1
+   fi
+   echo "Appending the following to /etc/sudoers:"
+   cat others/sudoers | sed "s/sekai/$USER/g" | sudo tee -a /etc/sudoers
+   echo
+   echo "/etc/sudoers was configured successfully!"
+}
+
 # The main function will pass additional flags to the stowPackages function.
 # Call it like this: main "$@"
 main() {
