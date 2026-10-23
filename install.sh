@@ -133,11 +133,20 @@ main() {
       fixVoidFonts
    fi
 
-   configCrontab
-   configSudoers
+   #CONF_CRONTAB=$(getAns "Configure crontab?" 'y' 'n')
+   CONF_CRONTAB="n"
+   if [ "$CONF_CRONTAB" = "y" ]; then
+      configCrontab
+   fi
 
-   option=$(getAns "Execute stowPackages $*?" 'y' 'n')
-   if [ "$option" = "y" ]; then
+   #CONF_SUDOERS=$(getAns "Config sudoers?" 'y' 'n')
+   CONF_SUDOERS="n"
+   if [ "$CONF_SUDOERS" = "y" ]; then
+      configSudoers
+   fi
+
+   EXEC_STOW=$(getAns "Execute stowPackages $*?" 'y' 'n')
+   if [ "$EXEC_STOW" = "y" ]; then
       stowPackages "$@"
    else
       exit 0
