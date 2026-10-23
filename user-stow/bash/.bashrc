@@ -33,20 +33,10 @@ PS1="${BRED}[${BYELLOW}\u${BGREEN}@${BBLUE}\h ${BMAGENTA}\W${BRED}]${GREEN}\$ ${
 
 HISTSIZE=-1
 
-## vi mode
-#set -o vi
-#bind -m vi-insert "\C-l":clear-screen
 set -o emacs
 
 # load aliases
 source "$HOME/.config/shell/aliasrc"
-
-## some functions to make life easier
-# compiles a basic C program
-c () {
-   PROGDIR="$(dirname "$1")"
-   gcc -g -Wall -O0 "$1" -lm -o "$PROGDIR"/a.out #&& "$PROGDIR"/a.out
-}
 
 # for music: check if mpd is running, if not it starts it. Then it opens ncmpcpp
 music () {

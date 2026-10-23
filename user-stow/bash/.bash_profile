@@ -38,14 +38,9 @@ export BROWSER="firefox"
 # startx our xinitrc
 alias startx='startx "$XINITRC"'
 
-[ -f ~/.rbenv/bin/rbenv] && eval "$(~/.rbenv/bin/rbenv init - bash)"
-[ -d "$HOME/.pyenv/bin" ] && export PYENV_ROOT="$HOME/.pyenv" && export PATH="$PYENV_ROOT/bin:$PATH"
-which pyenv >/dev/null && eval "$(pyenv init - bash)"
+eval "$(~/.rbenv/bin/rbenv init - bash)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
 
-[ -d "$HOME/.local/bin"] && export PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/.config/emacs/bin"] && export PATH="$HOME/.config/emacs/bin:$PATH"
-[ -d "$HOME/tools/cross/bin"] && export PATH="$HOME/tools/cross/bin:$PATH"
-[ -d "$HOME/.opencode/bin"] && export PATH="$HOME/.opencode/bin:$PATH"
-
-[ -d "$HOME/.local/share/cargo/bin"] && export PATH="$HOME/.local/share/cargo/bin:$PATH"
-[ -f "$HOME/.local/share/cargo/env"] && . "$HOME/.local/share/cargo/env"
+export PATH="$HOME/.local/share/cargo/bin:$HOME/.opencode/bin:$HOME/tools/cross/bin:$HOME/.local/bin:$PATH"
