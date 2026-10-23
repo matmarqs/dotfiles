@@ -1,7 +1,2 @@
-#set editing-mode vi
-$if mode=vi
-
-# no delay in bash vi-mode
+set editing-mode emacs
 set keyseq-timeout 10
-
-$endif
