@@ -30,7 +30,7 @@ alias \
     m="make" \
     mc="make clean" \
     km="killall mpd" \
-    nf="neofetch | lolcat" \
+    nf="fastfetch" \
     net="sudo netrestart" \
     xbi="sudo xbps-install" \
     xbq="xbps-query" \
