@@ -87,6 +87,11 @@ set conceallevel=0
 hi link HelpBar Normal
 hi link HelpStar Normal
 
+set scrolloff=5
+set cursorline
+highlight CursorLine cterm=none ctermbg=236
+highlight CursorLineNr cterm=None ctermfg=216
+
 packadd! hlyank
 packadd! nohlsearch
 
@@ -98,3 +103,29 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+execute "set <M-b>=\<Esc>b"
+execute "set <M-f>=\<Esc>f"
+execute "set <M-d>=\<Esc>d"
+
+nnoremap <C-n> <Down>
+nnoremap <C-p> <Up>
+nnoremap <C-b> <Left>
+nnoremap <C-f> <Right>
+nnoremap <C-e> <End>
+nnoremap <C-a> <Home>
+nnoremap <M-b> <S-Left>
+nnoremap <M-f> <S-Right>
+nnoremap <M-d> i<C-o>de
+nnoremap <C-k> d$
+
+inoremap <C-n> <Down>
+inoremap <C-p> <Up>
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-e> <End>
+inoremap <C-a> <Home>
+inoremap <M-b> <S-Left>
+inoremap <M-f> <S-Right>
+inoremap <M-d> <C-o>de
+inoremap <C-k> <C-o>d$
