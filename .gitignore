@@ -7,7 +7,3 @@
 # vim files
 **/*.swp
 **/.*.swp
-
-# files i don't want to track
-user-stow/config/.config/mimeapps.list
-user-stow/config/.config/qt5ct/qt5ct.conf
