@@ -11,6 +11,11 @@ xset s off
 xset -dpms
 xset s noblank
 
+# === DUAL MONITOR SETUP ===
+if xrandr --query | grep -q 'DP2 connected'; then
+    xrandr --output DP1 --auto --primary --output DP2 --auto --right-of DP1
+fi
+
 # clipboard managers
 parcellite -n &
 clipmenud &
